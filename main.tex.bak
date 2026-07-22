@@ -1,0 +1,5334 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[12pt,a4paper,oneside]{report}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{3} % enable section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{times}
+\usepackage{titlesec}
+\usepackage[normalem]{ulem}
+\usepackage{setspace}
+\singlespacing
+
+% Margins
+\usepackage[margin=1in]{geometry}
+
+% Chapter (Main Heading): Bold, 16pt, Center-aligned, ALL CAPS
+\titleformat{\chapter}[block]
+  {\normalfont\fontsize{16}{20}\bfseries\filcenter\MakeUppercase}
+  {\chaptertitlename\ \thechapter:\ }
+  {0pt}
+  {}
+\titlespacing*{\chapter}{0pt}{-20pt}{20pt}
+
+% Section (Sub-heading): Bold, 14pt, Left-aligned
+\titleformat{\section}[block]
+  {\normalfont\fontsize{14}{18}\bfseries}
+  {\thesection\ }
+  {0pt}
+  {}
+
+% Subsection (Side heading): Bold, 14pt, Left-aligned, Underlined
+\titleformat{\subsection}[block]
+  {\normalfont\fontsize{14}{18}\bfseries}
+  {}
+  {0pt}
+  {\uline}
+
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
+\fi
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1cm}
+{\fontsize{16}{20}\bfseries\MakeUppercase{Pharos University in Alexandria}\par}
+\vspace{0.3cm}
+{\fontsize{14}{18}\bfseries\MakeUppercase{Faculty of Engineering\\Computer Engineering Department}\par}
+\vspace{1.5cm}
+\includegraphics[width=1.8875in,height=1.37in]{./media/image25.jpg}\par
+\vspace{1.5cm}
+{\fontsize{16}{20}\bfseries\MakeUppercase{APMS: An Integrated Automated Pharmacy Management System with Intellectual Prescription OCR, Robotic Dispensing, and AI-Driven Inventory Analytics}\par}
+\vspace{1.5cm}
+{\fontsize{14}{18}\bfseries B.Sc. Graduation Thesis\par}
+\vspace{1.5cm}
+\begin{minipage}{0.45\textwidth}
+\begin{flushleft} \large
+\emph{Submitted by:}\\
+Ahmed Sherif HAMDY\\
+Youssef AHMED\\
+Mohamed BAKR\\
+Nadia HOSNY\\
+Ghada SEDIK\\
+Demiana SAID
+\end{flushleft}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\begin{flushright} \large
+\emph{Supervised by:}\\
+Dr. Sahar Ghanem
+\end{flushright}
+\end{minipage}
+\vfill
+{\large June 2026\par}
+\end{titlepage}
+
+\chapter*{ABSTRACT}
+\addcontentsline{toc}{chapter}{Abstract}
+Pharmaceutical dispensing and inventory management represent critical
+bottlenecks in modern healthcare systems, particularly in community
+pharmacies where handwritten prescriptions, manual stock reconciliation,
+and high workloads can lead to medical errors and financial
+inefficiencies. This thesis presents the \textbf{Automated Pharmacy
+Management System (APMS)}, an end-to-end integrated hardware-software
+solution that digitizes and automates community pharmacy operations from
+pre-scription entry to mechanical dispensing and inventory optimization.
+
+APMS comprises four core integrated subsystems:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \textbf{Prescription OCR Core Pipeline}: A vision-language model based
+  on GLM-OCR that ex-tracts handwritten drug names from prescription
+  images. Spelling mistakes and handwritten irregularities are resolved
+  using a novel five-stage sequential fallback search engine that
+  queries local and crawl-based external drug databases (FDA, Vezeeta)
+  with early-exit criteria and a five-layer safety filter.
+\item
+  \textbf{AI-Driven Adaptive Robotic Dispensing Hand}: An
+  anthropomorphic 3D-printed InMoov robotic hand driven by an ESP32
+  microcontroller and five servo motors. It utilizes a contin-uous
+  neural network trained on human demonstrations to interpolate target
+  object distances (measured via an HC-SR04 ultrasonic palm sensor) into
+  joint angle trajectories, executing distance-adaptive grasps under
+  MediaPipe vision guidance.
+\item
+  \textbf{PharmaSys Dashboard \& Roshetety Patient Mobile App}: A
+  full-stack software suite built with Flutter (frontend), Node.js,
+  Express, and PostgreSQL (backend), employing WebSockets for real-time
+  bidirectional synchronization between mobile patient orders,
+  pharmacist approval interfaces, and local serial-port robotic
+  dispensing triggers.
+\item
+  \textbf{AI-Driven Inventory Analytics Engine}: A suite of models
+  trained on 60 months of historical pharmacy transaction data. It
+  applies a segmented forecasting strategy (LightGBM for fast-moving
+  items, Croston's method for slow-moving items, and historical averages
+  for intermittent items), computes dynamic expiry-priority scores for
+  discount clearance, runs an ECOD-LOF shift anomaly ensemble to flag
+  cash reconciliation errors, and trains a Soft Actor-Critic (SAC)
+  reinforcement learning agent to optimize monthly replenishment reorder
+  decisions, reducing costs by 60\% over classical policies.
+\end{enumerate}
+
+Empirical evaluations demonstrate that the robotic arm achieves an
+85.7\% grasp success rate and 94.5\% OCR recognition accuracy under
+optimal lighting. The sequential fallback search engine re-duces API
+queries by 72\% compared to parallel voting. Segmented forecasting
+improves demand signal capturing by 8.45\% R\textsuperscript{2} over
+global models, while the SAC agent converges to an optimal policy in
+simulation. This work demonstrates the feasibility of combining low-cost
+open-source hardware, state-of-the-art vision-language models, and deep
+reinforcement learning to build a secure, on-premise, and affordable
+community pharmacy automation system.
+
+\clearpage
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+
+\chapter{INTRODUCTION}\label{introduction}
+
+\section{Background}\label{background}
+
+\begin{quote}
+The pharmacy industry is currently undergoing a significant digital
+transformation. Traditional community pharmacies face numerous
+operational challenges, including manual inventory tracking, paper-based
+prescription handling, inefficient stock management (leading to either
+overstocking or stockouts), and a distinct lack of real-time data-driven
+decision-making. In Egypt and the broader Middle East region, the vast
+majority of community pharmacies still operate with paper prescriptions,
+manual ledger-based inventory systems, and limited technological
+integration.
+
+Simultaneously, patient expectations are rapidly evolving. The modern
+patient seeks unpar-alleled levels of convenience---specifically, the
+ability to submit prescriptions digitally, track order status in real
+time, and communicate securely with pharmacy staff without necessarily
+visiting the physical location.
+
+While automation and robotic dispensing have become more accessible,
+they have his-torically been confined to large, high-budget hospital
+environments. The lack of integrated software that connects the digital
+prescription pipeline from the patient directly to physical on-premise
+robotic dispensing hardware remains a significant hurdle for community
+pharmacies. Furthermore, medical errors in pharmaceutical dispensing
+present a severe threat to patient safety. A primary source of these
+errors is the misinterpretation of handwritten medical prescriptions.
+Doctors' handwriting is notoriously difficult to read, and many drug
+names are visually or phonetically similar (Look-Alike/Sound-Alike or
+LASA drugs). When pharmacists misread a prescription, they may dispense
+the wrong medication, wrong dosage, or wrong frequency, with potentially
+fatal consequences. Automating the extraction and validation of drug
+names from handwritten prescriptions via Optical Character Recognition
+(OCR)
+
+combined with intelligent search databases represents a crucial safety
+layer.
+
+Finally, pharmacy operations are financially constrained. Stock
+management is often done heuristically, resulting in expired medicines
+(financial write-offs), stockouts of high-demand items (lost revenue and
+patient trust), and capital tied up in slow-moving inventory. Optimizing
+inventory replenishment through modern machine learning and
+decision-support algorithms is critical to making healthcare operations
+sustainable.
+\end{quote}
+
+\section{Problem Statement and Current Situation
+Evaluation}\label{problem-statement-and-current-situation-evaluation}
+
+\begin{quote}
+Community pharmacies face several interconnected operational failures
+that highlight the inefficiencies of manual systems:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Manual Prescription Handling}: Paper prescriptions are highly
+  prone to physical damage, loss, misinterpretation, and administrative
+  inefficiency. Pharmacists must manually read handwritten scripts under
+  time pressure, leading to critical errors. Traditional OCR systems
+  fail on cursive, continuous handwriting, and standard search
+  algorithms fail to match misspelled OCR outputs against formal drug
+  registries.
+\item
+  \textbf{Underutilized Automation and Dispensing Latency}: In cases
+  where pharmacies possess mechanical dispensing aids, the software
+  layer connecting patient orders to robotic hardware is fragmented or
+  non-existent. Pharmacists must manually enter commands to trigger
+  dispensing, creating a bottleneck.
+\item
+  \textbf{Inventory Inefficiency}: Stock reordering is performed
+  heuristically or based on basic min-max limits. This static approach
+  cannot adapt to seasonal demand spikes, leading to overstocking of
+  slow items or stockouts of life-saving medications.
+\item
+  \textbf{Financial Anomaly and Theft Exposure}: Daily shift cash
+  reconciliation is performed manually. Due to the high volume of
+  micro-transactions, internal theft, manual input errors, and cash
+  reconciliation anomalies are difficult for management to detect
+  without automated statistical audits.
+\item
+  \textbf{Patient Communication Gap}: Patients have zero visibility into
+  their prescription preparation status once submitted. They are forced
+  to wait in long physical queues, reducing overall patient
+  satisfaction.
+\end{itemize}
+
+\section{User Personas and Stakeholder
+Requirements}\label{user-personas-and-stakeholder-requirements}
+
+\begin{quote}
+To ground the system design in real-world constraints, we define three
+primary user personas representing different stakeholders:
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \textbf{Dr. Ahmed (Community Pharmacist)}: Dr. Ahmed works in a
+  high-traffic commu-nity pharmacy. He faces continuous cognitive load,
+  handling dozens of prescriptions hourly while answering patient
+  inquiries. He requires a system that transcribes hand-written
+  prescriptions automatically with high precision, presents the results
+  in a clear interface, highlights safety warnings, and allows him to
+  trigger robotic dispensing with a single click after verification.
+\item
+  \textbf{Marian (Chronic Patient)}: Marian is a patient who regularly
+  purchases maintenance medication. She values her time and experiences
+  frustration when waiting in long pharmacy queues only to find her
+  required medication is out of stock. She requires a mobile application
+  where she can upload prescription images, view pricing, choose generic
+  alternatives, track order progress, and receive notifications when the
+  order is ready for pickup or delivery.
+\item
+  \textbf{Khaled (Pharmacy Business Owner / Inventory Manager)}: Khaled
+  manages the pharmacy's financials and supply chain. He is concerned
+  about capital locked in dead stock, profit losses due to expired
+  drugs, and inventory stockouts. He requires an intelligent dashboard
+  that forecasts product-level demand, ranks expiry risk dy-namically to
+  target clearances, audits cashier shift records for fraud, and
+  automates reordering through optimized inventory policies.
+\end{enumerate}
+
+\section{Proposed Solution: The Integrated APMS
+Framework}\label{proposed-solution-the-integrated-apms-framework}
+
+\begin{quote}
+To address these challenges, we propose the \textbf{Automated Pharmacy
+Management System (APMS)}, an end-to-end framework that bridges digital
+patient-facing services, intelligent prescription translation, backend
+pharmacy operations, and on-premise robotic dispensing. The system
+architecture coordinates the following components:
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \textbf{Roshetety Mobile Application}: A mobile interface for patients
+  to capture and upload handwritten prescriptions, submit orders, and
+  track preparation status in real time.
+\item
+  \textbf{PharmaSys Staff Dashboard}: An enterprise dashboard for
+  pharmacists to verify OCR results, track inventory levels, monitor
+  robotic hand status, review financial anomaly reports, and approve
+  automated replenishment orders.
+\item
+  \textbf{Prescription OCR \& Intelligent Search Engine}: A local
+  processing pipeline run-ning a vision-language model (GLM-OCR via
+  Ollama) and a five-stage sequential fallback search engine that
+  resolves spelling errors by querying local tables, fuzzy databases,
+  and external web-crawled resources.
+\item
+  \textbf{Adaptive Grasping Robotic Hand}: A 3D-printed, 5-servo
+  mechanical hand that ex-ecutes distance-adaptive grasping based on
+  neural-network interpolation of ultrasonic distance measurements,
+  automatically dispensing physical packaging.
+\item
+  \textbf{AI-Driven Analytics Engine}: A background intelligence layer
+  that performs seg-mented time-series demand forecasting, expiry risk
+  scoring, shift reconciliation anomaly detection, and reinforcement
+  learning-based reordering.
+\end{enumerate}
+
+\section{Research Aims and
+Objectives}\label{research-aims-and-objectives}
+
+\begin{quote}
+The specific objectives of this project are:
+\end{quote}
+
+\begin{itemize}
+\item
+  To design and print a low-cost, anthropomorphic robotic hand (InMoov
+  design) with 16 degrees of freedom (DoF) and 5 active servo actuators.
+\item
+  To implement a real-time computer vision teleoperation system using
+  MediaPipe hand landmark tracking for demonstration recording.
+\item
+  To train a multi-layer perceptron neural network capable of mapping a
+  scalar object distance to a complete continuous servo trajectory for
+  adaptive grasping.
+\item
+  To develop a local OCR pipeline using GLM-OCR and design a sequential
+  search fallback engine to match spelling errors against Egyptian and
+  global drug databases.
+\item
+  To construct a robust Node.js backend using TypeScript, PostgreSQL,
+  and WebSockets to synchronize order status and serial robotic control.
+\item
+  To build a responsive staff dashboard and patient app in Flutter.
+\item
+  To deploy and evaluate time-series forecasting (LightGBM, Croston's)
+  and reinforce-ment learning (Soft Actor-Critic) on a real 60-month
+  dataset.
+\end{itemize}
+
+\begin{quote}
+These project objectives and their corresponding success metrics are
+summarized in Table \textbf{??}.
+
+TABLE 1: System Objectives and Success Criteria
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1823}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2136}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.6041}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Objective}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Target Metric}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Validation Method}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+OCR Accuracy
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{$\ge$} 85.0\%
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Correctly transcribe handwritten drug names from prescriptions
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Search Precision
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Near-zero false positives
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+0\% false matches on known non-drug words (e.g. toothpaste)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Hardware Dexterity
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{$\ge$} 80.0\% grasp rate
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Successful grasping and retention of medicine boxes (4.0--9.5 cm)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Query Latency
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Sub-second query
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Search resolution under 1 second; VLM pipeline under 10 seconds
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Safety Filters
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+100\% compliance
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Reject corrupt inputs, prevent incorrect command dispatch via
+confirmation
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Replenishment Cost
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{$\ge$} 40\% reduction
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Soft Actor-Critic model reduces holding/stockout costs vs. Min-Max
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Anomaly Consensus
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{$\ge$} 95\% agreement
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+ECOD and LOF consensus on shift cash reconciliation logs
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\section{Thesis Organization}\label{thesis-organization}
+
+\begin{quote}
+This thesis is organized into five chapters. Chapter 1 outlines the
+background, problem statement, proposed solution, objectives, and
+stakeholder requirements. Chapter 2 reviews the literature on medical
+OCR, approximate string matching, robotic grasping, 3D printing
+mechanics, pharmacy dashboards, and inventory forecasting, identifying
+the gaps bridged by our system. Chapter 3 details the structural system
+design, kinematics, database schema, and model architectures. Chapter 4
+describes the software implementation, data collection pipelines, and
+presents comprehensive experimental results and discussion. Chapter 5
+sum-marizes the work, addresses regulatory and ethical considerations,
+identifies limitations, and suggests future research directions.
+\end{quote}
+
+\chapter{LITERATURE REVIEW}\label{literature-review}
+
+\section{Medical OCR and Handwriting
+Recognition}\label{medical-ocr-and-handwriting-recognition}
+
+\begin{quote}
+Optical Character Recognition (OCR) of medical prescriptions has been a
+subject of research for decades. Traditional OCR systems (such as
+Tesseract) rely on character segmentation and hand-crafted feature
+extraction. While highly effective on printed text, these systems fail
+on handwritten prescriptions due to the continuous nature of cursive
+writing, varying stroke widths, and the visual similarity between
+characters (e.g., 'm' vs 'rn', 'i' vs 'l'). Recent advancements in deep
+learning have introduced Sequence-to-Sequence models and Vision-Language
+Models (VLMs) like GLM-4 and LLaVA. These models leverage large-scale
+pre-training to capture contextual semantics, allowing them to
+transcribe handwritten text with high fidelity by predicting character
+sequences based on surrounding context. However, on-device deployment of
+such large models remains a challenge in resource-constrained
+environments like local pharmacies.
+\end{quote}
+
+\section{Spelling Correction and Drug Database
+Search}\label{spelling-correction-and-drug-database-search}
+
+\begin{quote}
+Even with state-of-the-art OCR, transcribed medical text frequently
+contains spelling errors. In pharmacy dispensing, matching these
+erroneous strings to a valid medication name is critical. Standard
+search engines utilize exact string matching, which fails on a single
+character mismatch. Information retrieval literature utilizes
+approximate string matching algorithms, primarily categorized into edit
+distance-based metrics (Levenshtein distance, Jaro-Winkler) and phonetic
+similarity metrics (Soundex, Metaphone). Furthermore, semantic search
+using dense vector embeddings (e.g., Sentence-BERT) has emerged to match
+text based on semantic meaning. However, medical terms are highly
+specialized, and applying semantic models to short, misspelled drug
+names often yields poor results. A combined sequential fallback
+architecture that leverages local database structures before querying
+heavy fuzzy or external APIs is a key research area.
+\end{quote}
+
+\section{Robotic Grasping and Kinematic
+Mimicry}\label{robotic-grasping-and-kinematic-mimicry}
+
+\begin{quote}
+Robotic grasping of arbitrary objects has transitioned from rigid
+parallel-jaw grippers to multi-fingered anthropomorphic hands.
+Anthropomorphic designs, such as the open-source InMoov hand, provide
+human-like dexterity and passive compliance due to tendon-driven
+mechanisms. Controlling these highly underactuated systems traditionally
+involves solving complex inverse kinematics or using expensive motion
+capture systems. Learning from Demonstration (LfD) has emerged as an
+intuitive paradigm where human operators demonstrate motions that the
+robot learns to replicate. With the release of real-time computer vision
+frameworks like MediaPipe Hand Landmarker, teleoperation via standard
+webcams has become feasible, eliminating the need for glove-based
+interfaces. However, interpolating these demonstrations to execute
+stable, autonomous grasps at arbitrary distances using low-cost
+microcontrollers remains an open challenge.
+\end{quote}
+
+\section{3D Printing Parameters and FDM
+Mechanics}\label{d-printing-parameters-and-fdm-mechanics}
+
+\begin{quote}
+Fused Deposition Modeling (FDM) is the primary manufacturing method for
+low-cost robotic prototypes. Research in additive manufacturing
+highlights that 3D-printed parts' structural in-tegrity, weight, and
+print time are highly dependent on infill density and pattern
+configurations. Studies (e.g., Cetin \& Eryildiz, 2022) demonstrate that
+while tensile strength increases with
+
+infill density, it exhibits diminishing returns above 30\%. In robotic
+arm design, minimizing the mass of moving components is crucial to
+prevent motor overload and reduce inertia. Therefore, selecting optimal
+infill densities (20\% to 35\%) and specialized patterns (Gyroid for
+isotropic strength, Grid for thin walls) is essential to balance weight
+reduction with structural load resistance.
+\end{quote}
+
+\section{HCI and Pharmacy Dashboard
+Design}\label{hci-and-pharmacy-dashboard-design}
+
+\begin{quote}
+Human-Computer Interaction (HCI) in medical informatics is critical, as
+software usability directly correlates with clinical errors. Pharmacy
+environments are characterized by high cognitive load, frequent
+interruptions, and physical multitasking. Nielsen's usability heuristics
+emphasize ''visibility of system status'' and ''error prevention.''
+Studies demonstrate that PMS interfaces that fail to highlight critical
+alerts (e.g., expired stock or duplicate prescriptions) lead to
+cognitive fatigue and dispensing errors. Implementing structured design
+systems, clear typography (such as Inter and Cairo for bilingual
+legibility), and redundant encoding of status indicators (color, icons,
+and text) is recognized as standard best practice to reduce errors.
+\end{quote}
+
+\section{Inventory Forecasting and Decision
+Models}\label{inventory-forecasting-and-decision-models}
+
+\begin{quote}
+Pharmacy inventory management involves thousands of Stock Keeping Units
+(SKUs) exhibit-ing highly diverse demand patterns. Traditional
+replenishment models rely on static Min-Max policies, which lead to
+stockouts for fast-moving seasonal items or excessive holding costs for
+slow items. Time-series forecasting models (e.g., ARIMA, Prophet,
+LightGBM) have been widely applied to predict retail demand. However,
+pharmacy datasets are highly sparse, with a large proportion of
+''zero-sales'' periods. For such intermittent demand, classical
+statistical models like Croston's Method are theoretically superior, as
+they forecast demand size and de-mand interval separately. Recently,
+Deep Reinforcement Learning (DRL) algorithms, such as Soft Actor-Critic
+(SAC), have been proposed for inventory optimization, learning
+continuous ordering policies directly from simulated cost feedback,
+showing significant improvements over static heuristics.
+\end{quote}
+
+\section{Drug Naming Databases and Reference
+Sources}\label{drug-naming-databases-and-reference-sources}
+
+\begin{quote}
+Authentic drug identification requires robust reference datasets. We
+integrated three distinct reference sources to build our unified
+database, comparing their properties in Table \textbf{??}.
+
+TABLE 2: Comparison of Reference Data Sources
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1922}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1802}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.4209}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.0985}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1081}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Source}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Authority}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Key Features}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Coverage}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Priority}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+FDA NDC Directory
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+U.S. Government
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Standardized active ingredients, brand names
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Global
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+1 (Highest)
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Vezeeta Egypt API
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Commercial API
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Current market prices, local packaging forms
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Regional
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+2
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+EDA Dataset (Kaggle)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Egyptian Drug Auth.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Egyptian brand names, EGP pricing, local companies
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Regional
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+3
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\section{Autonomous Mobile Robotics in Pharmaceutical
+Logistics}\label{autonomous-mobile-robotics-in-pharmaceutical-logistics}
+
+\begin{quote}
+Autonomous Mobile Robots (AMRs) have become increasingly prominent in
+healthcare settings for transporting medical supplies, laboratory
+specimens, and pharmaceuticals. Tradi-tional AMRs rely heavily on
+expensive LiDAR-based Simultaneous Localization and Mapping (SLAM)
+systems for navigation. However, visual navigation using consumer-grade
+webcams and deep learning has emerged as a cost-effective alternative.
+
+For object detection in mobile logistics, real-time algorithms like YOLO
+(You Only Look Once) are widely used due to their low latency. When
+deployed on mobile platforms, detecting target items from a distance is
+challenging because the target objects occupy a very small portion of
+the camera frame. Slicing Aided Hyper Inference (SAHI) solves this
+small-object detection bottleneck by partitioning high-resolution video
+frames into overlapping search windows, running inference on each slice,
+and merging predictions.
+
+To enable the robot to perform precise docking and drop-off, fiducial
+markers (such as ArUco markers) are utilized. ArUco markers are
+synthetic square binary patterns that provide robust 3D pose estimation
+and orientation tracking with low computational overhead, facilitating
+closed-loop visual servoing to docking stations. Combining
+deep-learning-based perception for target identification with fiducial
+tracking for precise alignment creates a hybrid perception pipeline
+suitable for low-cost mobile pharmacy dispensing platforms.
+\end{quote}
+
+\section{Gap Analysis}\label{gap-analysis}
+
+\begin{quote}
+Despite substantial research in each individual domain, a significant
+gap remains: TABLE 3: Gap Analysis of Existing Pharmacy Systems
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2361}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1739}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1374}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1862}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1633}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Feature}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Commercial PMS}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{IoT Research}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Industrial Robotics}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Proposed APMS}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Digital Prescription App
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+Yes
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Yes}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Handwritten OCR Pipeline
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Yes}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Robotic Arm Dispensing
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Yes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Yes}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+On-Device Local VLM
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Yes}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+AI Inventory Forecasting
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Basic
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Yes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Yes}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Low-Cost / Affordable
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+Yes
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Yes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Yes}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+Existing commercial pharmacy software remains purely administrative,
+requiring manual data entry. Robotic dispensing research is confined to
+high-cost industrial parallel-jaw grippers in hospital settings. No
+current solution provides an integrated pipeline that takes a patient's
+prescription image, extracts the text locally, verifies the medication
+through a sequential safety-filtered search, triggers a low-cost
+3D-printed anthropomorphic hand to physically dispense the medication,
+and uses reinforcement learning to manage stock levels. The APMS
+framework bridges this gap.
+\end{quote}
+
+\section{SYSTEM DESIGN AND
+ARCHITECTURE}\label{system-design-and-architecture}
+
+\section{High-Level System Architecture and
+Flowcharts}\label{high-level-system-architecture-and-flowcharts}
+
+\begin{quote}
+The Automated Pharmacy Management System (APMS) is designed using a
+modular, three-phase architecture operating under a ''Sense-Plan-Act''
+cycle. The high-level data flow con-nects three key domains: the
+patient, the pharmacist (and AI analytics), and the physical hardware
+actuators.
+
+To ensure complete clarity, we document the operational phases in three
+separate high-level flowcharts.
+\end{quote}
+
+\includegraphics[width=5.38042in,height=1.64187in]{./media/image67.jpg}
+
+\begin{quote}
+Fig. 1: APMS Architectural Phase 1: Data Collection and Trajectory
+Recording
+
+During Phase 1 (Data Collection), hand gestures are captured via an IP
+camera. The Medi-aPipe Hand Landmarker tracks landmarks and computes
+finger extension ratios. Concurrently, an HC-SR04 ultrasonic distance
+sensor records target distance. The calculated angles and distances are
+serialized into JSON trajectory files, which populate the local Motion
+Library.
+\end{quote}
+
+\includegraphics[width=5.28in,height=0.88687in]{./media/image35.jpg}
+
+\begin{quote}
+Fig. 2: APMS Architectural Phase 2: Neural Network Trajectory Model
+Training
+
+During Phase 2 (Model Training), the JSON files in the Motion Library
+are parsed to construct a structured training database. A Multi-Layer
+Perceptron (MLP) neural network is trained using backpropagation to
+interpolate continuous joint trajectories for any distance within the
+operational bounds (4.0 cm to 9.5 cm).
+\end{quote}
+
+\includegraphics[width=5.34187in,height=1.225in]{./media/image29.jpg}
+
+\begin{quote}
+Fig. 3: APMS Architectural Phase 3: Autonomous Grasping and Dispensing
+Execution
+
+During Phase 3 (Autonomous Operation), the system functions
+independently. The ul-trasonic sensor measures the package distance,
+which is filtered and checked for stability.
+
+The MLP model generates the joint angles, driving the ESP32 to execute
+the grasp. The camera captures the label, which is processed by local
+GLM-OCR and matched against the reference database using the sequential
+fallback engine before database inventory updates are completed.
+\end{quote}
+
+\section{Subsystem Hardware Components
+Overview}\label{subsystem-hardware-components-overview}
+
+\begin{quote}
+The physical dispensing hardware consists of four interconnected
+components:
+\end{quote}
+
+\includegraphics[width=2.92292in,height=2.33198in]{./media/image64.jpg}\includegraphics[width=2.9975in,height=1.49875in]{./media/image60.png}
+
+\begin{quote}
+(a) MG995R Servos Assembly (b) Palm-mounted HC-SR04 Sensor
+\end{quote}
+
+Fig. 4: APMS Hardware Integrations
+
+\begin{itemize}
+\item
+  \textbf{InMoov Robotic Hand}: A 3D-printed anthropomorphic hand
+  containing 5 MG995R metal gear servos mounted in the forearm. MG995R
+  servos provide a maximum torque of 12 kg\emph{$\cdot$}cm, driving finger
+  flexion/extension via high-strength nylon tendons. The fingers operate
+  within an experimental angular range of 50$^\circ$ (fully
+  open) to 150$^\circ$ (fully closed).
+\item
+  \textbf{HC-SR04 Ultrasonic Distance Sensor}: Mounted on the palm of
+  the hand to measure the distance to the target medicine pack
+  (operational range: 4.0 cm to 9.5 cm). The sensor operates by emitting
+  a 40 kHz ultrasonic pulse and measuring the echo return time, sampled
+  at 50 Hz.
+\item
+  \textbf{ESP32 Microcontroller}: Acting as the hardware interface. It
+  samples the ultrasonic sensor and drives the five PWM servo signals.
+  It communicates with the host PC via serial USB communication at
+  115200 baud.
+\item
+  \textbf{IP Camera Module}: Captures a high-resolution video feed of
+  the workspace for both MediaPipe hand tracking (Phase 1) and label
+  capture (Phase 3).
+\end{itemize}
+
+\section{Mechanical Kinematics and Joint Mapping
+Equations}\label{mechanical-kinematics-and-joint-mapping-equations}
+
+\subsection{Kinematic Linkage
+Analysis}\label{kinematic-linkage-analysis}
+
+\begin{quote}
+Each of the five fingers is modeled as a serial kinematic chain
+containing three revolute joints: the Metacarpophalangeal (MCP) joint,
+the Proximal Interphalangeal (PIP) joint, and
+
+the Distal Interphalangeal (DIP) joint. In the InMoov mechanical hand,
+the PIP and DIP joints are coupled via a shared tendon linkage. When the
+actuator pulls the tendon, both joints flex simultaneously, reducing the
+active Degrees of Freedom (DoF) from 15 in a human hand to 5 active DoFs
+in the robot (one servo per finger). Wrist pitch and twist represent an
+additional 2 DoFs. Denavit-Hartenberg (D-H) coordinate frames are
+established at each knuckle to trace the fingertip trajectories relative
+to the base wrist frame.
+\end{quote}
+
+\includegraphics[width=3.00625in,height=1.34375in]{./media/image80.jpg}
+
+\begin{quote}
+\includegraphics[width=2.93614in,height=2.93614in]{./media/image18.png}(a)
+DH Coordinate Frames (b) Blender Forearm Assembly View
+
+Fig. 5: Robotic Kinematics and Blender 3D Design
+\end{quote}
+
+\subsection{Finger-to-Servo Joint Mapping
+Equations}\label{finger-to-servo-joint-mapping-equations}
+
+\begin{quote}
+To perform mimicry, the joint angles are computed from MediaPipe
+landmarks. We define the normalized extension ratio
+\emph{R\textsubscript{i}} for finger \emph{i} based on the Euclidean
+distance from the fingertip to the wrist normalized by the distance from
+the Metacarpophalangeal (MCP) knuckle to the wrist:
+\end{quote}
+
+\uline{\emph{\textbar\textbar{}}\textbf{p}tip\emph{,i -}
+\textbf{p}wrist\emph{\textbar\textbar{} }}
+
+\begin{quote}
+\emph{R}
+=\includegraphics[width=\linewidth,height=0.12153in,keepaspectratio]{./media/image49.png}
+
+(1)
+\end{quote}
+
+\emph{\textbar\textbar{}}\textbf{p}MCP\emph{,i -}
+\textbf{p}wrist\emph{\textbar\textbar{}}
+
+\begin{quote}
+The target PWM command angle \emph{A\textsubscript{i}} (constrained
+between fully open \emph{A}\textsubscript{open} = 50$^\circ$
+and fully closed \emph{A}\textsubscript{closed} =
+150$^\circ$) is calculated using a linear clamp-and-scale
+inversion mapping:
+
+\emph{A} = clamp \emph{A - \textsuperscript{\uline{Ri -
+Ri,}}}\textsuperscript{\uline{min}} \emph{$\times$} (\emph{A - A} )\emph{, A , A}
+(2)
+
+\emph{i} closed
+
+\emph{Ri,}max
+
+\emph{--- Ri,}min
+
+closed
+
+open
+
+open
+
+closed
+
+where \emph{R\textsubscript{i,}}\textsubscript{min} and
+\emph{R\textsubscript{i,}}\textsubscript{max} represent the calibration
+limits of the operator's finger extension. This normalization allows the
+system to remain invariant to the user's physical hand size.
+\end{quote}
+
+\subsection{3D Printing Infill Density
+Selection}\label{d-printing-infill-density-selection}
+
+\begin{quote}
+To manufacture the robotic hand, Blender was utilized to assemble,
+verify tolerances, and repair STL meshes. The 3D printing parameters are
+critical: printing with a high infill density (70\% to 100\%) increases
+the mass of moving components, overloading the MG995R servos and
+increasing power consumption. Conversely, very low infill
+(\emph{\textless{}}15\%) leads to mechanical
+
+failure under grasp load. Research in FDM tensile strength demonstrates
+that structural resistance plateaues above 30\% infill density.
+
+We deployed a segmented infill strategy:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Fingers and Phalanges}: Grid pattern at 25\% infill, balancing
+  low inertia with high wall rigidity (1.6 mm walls prevent buckling
+  under flexion stress).
+\item
+  \textbf{Palm Plate}: Gyroid pattern at 30\% infill, providing
+  isotropic load resistance to absorb multi-directional grip forces.
+\item
+  \textbf{Forearm Housing}: Rectilinear pattern at 20\% infill,
+  minimizing weight since it serves primarily as a protective shell.
+\item
+  \textbf{Wrist Gear Train}: Cubic subdivision pattern at 35\% infill to
+  support gear teeth shear stresses.
+\end{itemize}
+
+\begin{quote}
+This design achieved a 35\% to 40\% weight reduction compared to fully
+dense parts, keeping motor loads well within the 12 kg\emph{$\cdot$}cm rated
+torque.
+\end{quote}
+
+\includegraphics[width=4.20313in,height=2.17644in]{./media/image73.jpg}
+
+\begin{quote}
+Fig. 6: 3D-Printed Components: High-Level and Low-Level Exploded
+Assembly View
+\end{quote}
+
+\section{Software Clean Architecture and Database
+Design}\label{software-clean-architecture-and-database-design}
+
+\begin{quote}
+The automated pharmacy management system software infrastructure
+connects the interfaces, the relational database, and the hardware.
+\end{quote}
+
+\includegraphics[width=2.74082in,height=3.44912in]{./media/image17.png}\includegraphics[width=4.00521in,height=2.44593in]{./media/image68.png}
+
+\begin{quote}
+(a)Figure: Flutter Clean Architecture (b)Figure: Backend Architecture
+
+Fig. 7: APMS Software Subsystem Design
+
+\textbf{Frontend Implementation}: The frontend is developed using
+Flutter (Dart), enabling natively compiled cross-platform applications
+from a single codebase based on Clean Architecture principles.
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{PharmaSys Staff Dashboard} The PharmaSys app is organized into
+  a clean, feature-based architecture. It implements a responsive design
+  approach using LayoutBuilder to seamlessly switch between Desktop
+  (multi-column grid with sidebar navigation), Tablet, and Mobile
+  layouts. State management is handled via Provider, ensuring
+  lightweight and efficient UI updates. A comprehensive API Service
+  Client manages all HTTP requests, featuring custom exception classes,
+  timeout management, offline detection, and a dedicated WebSocket
+  client for real-time robotic hardware updates.
+\item
+  \textbf{Roshetety Patient App} The patient app follows a flat
+  navigation model optimized for minimal friction. It includes full
+  Arabic/English bilingual support using Flutter\textquotesingle s
+  Directionality widget for Right-to-Left (RTL) layout switching. A live
+  WebSocket connection provides patients with real-time order tracking
+  updates (Pending $\rightarrow$ Processing $\rightarrow$ Dispensed $\rightarrow$ Ready).
+\end{itemize}
+
+\begin{quote}
+\textbf{Database Implementation}: The system relies on a PostgreSQL
+relational database designed to guarantee data integrity, historical
+accuracy, and efficient querying. The schema comprises core tables
+designed for normalized efficiency:
+\end{quote}
+
+\begin{itemize}
+\item
+  users: Manages staff authentication and role-based access.
+\item
+  medicines\_inventory: The central repository tracking trade names,
+  active substances, stock levels, costs, and expiration dates.
+\item
+  invoices\_fawateer \& invoice\_items: Tracks supplier deliveries and
+  financial payables.
+\item
+  prescriptions \& prescription\_items: Manages patient orders, linking
+  requested items directly to the physical inventory. The database is
+  accessed via the pg (node-postgres) driver utilizing connection
+  pooling to ensure high-throughput performance during peak pharmacy
+  hours.
+\end{itemize}
+
+\includegraphics[width=3.0971in,height=2.23997in]{./media/image21.png}\includegraphics[width=3.60782in,height=2.16469in]{./media/image4.png}
+
+Figure: Database ER Diagram Figure: Database Schema
+
+\begin{quote}
+\textbf{Backend Implementation}: The backend gateway is built using
+Node.js and Express 5.x with TypeScript, adopting a modular three-tier
+microservices architecture. It acts as the central hub connecting the
+Flutter frontends, the PostgreSQL database, and the physical hardware.
+
+\textbf{API Gateway Architecture}: The Express server features a modular
+router architecture separating concerns (Auth, Medicines, Invoices,
+Prescriptions, Robot).
+\end{quote}
+
+\begin{itemize}
+\item
+  Authentication \& Security: Implemented via JSON Web Tokens (JWT) and
+  bcryptjs for password hashing. Role Guards strictly differentiate
+  between Staff and Manager endpoints.
+\item
+  Validation: Request body validation is strongly typed using the zod
+  library.
+\item
+  File Processing: Utilizes multer for multipart uploads and xlsx for
+  bulk Excel data imports.
+\end{itemize}
+
+\includegraphics[width=4.18073in,height=4.00602in]{./media/image23.png}
+
+Figure: Security Authentication Flow
+
+\section{UI/UX and HCI Design}\label{uiux-and-hci-design}
+
+\begin{quote}
+The UI/UX design methodology for both the PharmaSys Staff Dashboard and
+the Roshetety Patient Application is strictly grounded in established
+Human-Computer Interaction (HCI) principles. The design was informed by
+the specific cognitive and environmental demands of pharmacy work, such
+as high time pressure and frequent interruptions.
+\end{quote}
+
+\includegraphics[width=5.36593in,height=2.70245in]{./media/image33.png}
+
+Figure: User Personas
+
+\includegraphics[width=5.52771in,height=5.72396in]{./media/image37.png}
+
+Figure: System Use Cases
+
+\begin{quote}
+\textbf{User Research and Interviews}: To ensure the interface met the
+operational reality of Egyptian community pharmacies, a series of
+structured interviews were conducted with three pharmacy managers and
+five pharmacy staff members. The feedback collected highlighted several
+core pain points:
+\end{quote}
+
+\begin{itemize}
+\item
+  High Cognitive Load: Staff reported that existing software required
+  too many clicks to complete a single sale, leading to user fatigue.
+\item
+  Screen Clutter: Managers complained that crucial data (like low stock
+  alerts) was often buried under menus.
+\item
+  Physical Constraints: Staff often operate the software while holding
+  physical products or talking to patients, necessitating larger click
+  targets and keyboard-navigable workflows. These insights directly
+  translated into our User-Centered Design (UCD) approach. We
+  implemented large touch targets ($\ge$ 44px), flattened the navigation
+  hierarchy to minimize steps for common tasks like checking out a
+  prescription, and introduced global keyboard shortcuts to speed up
+  high-volume data
+  entry.\includegraphics[width=5.42992in,height=3.42188in]{./media/image66.png}
+\end{itemize}
+
+\begin{quote}
+Figure: User Journey Sequence
+
+\textbf{Design System and Tokens}: A comprehensive Design System was
+established to guarantee visual consistency and reduce development
+overhead. This system is driven by predefined "Design Tokens" that
+control color, typography, and spacing across both the staff and patient
+applications.
+\end{quote}
+
+\begin{itemize}
+\item
+  Typography Strategy: The system employs a dual-font approach to
+  support seamless bilingual (Arabic/English) interfaces. "Inter" is
+  utilized for crisp English legibility, while "Cairo" ensures modern,
+  highly readable Arabic text.
+\item
+  Color Palette: The PharmaSys staff dashboard utilizes a professional
+  "Medical Blue" primary palette (\#02569B), designed to reduce eye
+  strain during prolonged enterprise use. The Roshetety patient app
+  utilizes a softer, more inviting aesthetic.
+\item
+  Accessibility and Status: Status indicators rely on redundant
+  encoding---combining color, icons, and text labels---to ensure
+  accessibility for color-blind users (e.g., a green checkmark for
+  in-stock, an amber triangle for low stock, a red cross for expired
+  items).
+\end{itemize}
+
+\begin{quote}
+\includegraphics[width=4.01042in,height=2.3295in]{./media/image24.png}
+
+Figure: Design System Tokens
+
+\textbf{Visibility of System Status and Navigation}: Real-time
+indicators are used throughout the system. Key Performance Indicator
+(KPI) cards update dynamically, WebSocket badges show connection status,
+and the robot control panel displays live arm status. The navigation
+pattern relies on a collapsible sidebar, ensuring that the main
+workspace is maximized for data-heavy views.
+
+\includegraphics[width=1.80208in,height=2.77742in]{./media/image7.png}
+
+Figure: Navigation Wireframe
+
+A summary of the APMS software technology stack is documented in Table
+4.
+
+TABLE 4: APMS Technology Stack Overview
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1478}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1673}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2226}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3902}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Subsystem}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Framework/Tech}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Component}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Rationale}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Frontends
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Flutter (Dart)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+PharmaSys \& Roshetety
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Multi-platform compilation from a single code-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+base
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Backend
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Node.js, Express
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+API Server gateway
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Asynchronous event loop, rapid JSON han-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+dling
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Database
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+PostgreSQL
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Relational Database
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Relational consistency, native JSON support,
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+pooling
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+OCR Engine
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ollama
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+GLM-4 OCR
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Local execution ensures HIPAA patient data
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+privacy
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Search Index
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Elasticsearch
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Inverted n-gram indexing
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Sub-millisecond approximate string retrieval
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Microcontroller
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+ESP32
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Servo
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+High-frequency hardware PWM signal genera-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+tion
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+\textbf{Integrations (Hardware \& Real-time Synchronization)} A critical
+component of this methodology is the seamless integration between
+software logic and external/hardware services.
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Real-Time Synchronization via WebSockets} A standalone
+  WebSocket server operates alongside the HTTP server to broadcast
+  real-time events. For example, when a bulk inventory upload occurs via
+  the fallback Google Sheets bridge, the backend parses the CSV,
+  validates it, and triggers a WebSocket broadcast. This allows the
+  staff dashboard to instantly refresh the inventory view without manual
+  page reloads.
+\item
+  \textbf{Robotic Arm Hardware Integration} The backend integrates
+  directly with a robotic dispensing arm via a USB Serial Port (RS-232).
+  When pharmacy staff dispatch a prescription, the backend generates a
+  specific JSON pick sequence. This payload is transmitted over the
+  serial port using the serialport Node.js package. The Arduino Mega
+  micro-controller processes the command, drives the stepper motors to
+  the specified bin, dispenses the medicine, and sends an
+  Acknowledgement (ACK) back through the serial interface. The Node.js
+  server receives this ACK, updates the PostgreSQL database, and
+  instantly broadcasts the status change via WebSockets to both the
+  staff dashboard and the patient\textquotesingle s mobile app
+\end{itemize}
+
+\includegraphics[width=6.13021in,height=2.5157in]{./media/image28.png}
+
+Figure: WebSocket Sequence
+
+\section{System Initialization Bootstrap
+Sequence}\label{system-initialization-bootstrap-sequence}
+
+\begin{quote}
+The system bootstrap module acts as the initialization orchestrator for
+the entire pipeline, executing all intensive resource-loading operations
+before the FastAPI server begins accepting requests. This ensures
+minimal response latency. The bootstrap sequence consists of three
+sequential steps:
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \textbf{Step 1: Resource Loading (init\_search())}: Loads the unified
+  drug database CSV file into a pandas DataFrame, loads the FAISS index
+  and pre-computed embed-dings from disk, initializes the
+  SentenceTransformer model in memory, builds the Python set lookup
+  structure for exact matching, and establishes the connection pool to
+  Elasticsearch.
+\item
+  \textbf{Step 2: Model Availability Check}: Performs a local HTTP
+  health check on the Ollama API to verify that the GLM-4 OCR model is
+  running, loaded, and responsive.
+\item
+  \textbf{Step 3: FastAPI Port Binding}: Binds the application to the
+  configured host port, initializing the REST endpoints and WebSocket
+  channels with all resources fully preloaded.
+\end{enumerate}
+
+\section{AI Models Design and Analytics
+Architecture}\label{ai-models-design-and-analytics-architecture}
+
+\begin{quote}
+The background intelligence layer running in the APMS backend contains
+four distinct models:
+
+\includegraphics[width=4.8125in,height=2.42917in]{./media/image78.jpg}
+
+Fig. 8: Product Segmentation Pipeline for Demand Forecasting
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \textbf{Segmented Demand Forecasting}: Products are divided into three
+  segments: Fast-Moving, Slow-Moving, and Intermittent. Fast-moving
+  items are modeled using a LightGBM regressor trained on engineered
+  features (historical lag variables of 1, 2, 3, 6, and 12 months,
+  rolling means, trend variables, and cyclical month encodings).
+  Slow-moving items are modeled using Croston's Method, which separately
+  forecasts demand sizes and inter-demand intervals. Intermittent items
+  with sparse sales are assigned a 12-month historical trailing average
+  baseline.
+\item
+  \textbf{Expiry Priority Scoring}: Computes a composite risk score for
+  all inventory lines:
+\end{enumerate}
+
+\emph{S} = 0\emph{.}45\emph{$\times$S}\textsubscript{expiry}
++0\emph{.}25\emph{$\times$S}\textsubscript{value}
++0\emph{.}15\emph{$\times$S}\textsubscript{coverage}
++0\emph{.}10\emph{$\times$S}\textsubscript{demand}
++0\emph{.}05\emph{$\times$I}\textsubscript{warning} (3)
+
+\begin{quote}
+where \emph{S}\textsubscript{expiry} is inversely proportional to days
+to expiry, \emph{S}\textsubscript{value} represents the financial value
+at risk, \emph{S}\textsubscript{coverage} represents current stock
+coverage, \emph{S}\textsubscript{demand} represents historical velocity,
+and \emph{I}\textsubscript{warning} is a binary flag triggered below 60
+days. This score prioritizes clearance discounts (up to 40\% discount).
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{2}
+\item
+  \textbf{Shift Anomaly Detection}: Monitors cash reconciliation logs.
+  It uses expected cash, actual cash, expected/actual ratio, cash
+  discrepancy, and weekday features. A non-parametric unsupervised
+  ensemble of ECOD (Empirical Cumulative Distribution Outlier Detection)
+  and LOF (Local Outlier Factor) detects cashier fraud or logging errors
+  by requiring consensus between global density and local outlier
+  models.
+\item
+  \textbf{SAC Replenishment Agent}: Formulates replenishment ordering as
+  a Markov Deci-sion Process (MDP) with a 5-dimensional state space:
+\end{enumerate}
+
+\begin{quote}
+\emph{x\textsubscript{t}} = {[}\emph{I\textsubscript{t},
+D\textsubscript{t}, V\textsubscript{t}, C\textsubscript{t},
+R\textsubscript{t}}{]}\emph{\textsuperscript{T}} (4)
+
+where \emph{I\textsubscript{t}} is stock on hand,
+\emph{D\textsubscript{t}} is days since last order,
+\emph{V\textsubscript{t}} is rolling demand, \emph{C\textsubscript{t}}
+is coverage, and \emph{R\textsubscript{t}} is reorder ratio. The action
+space is continuous (reorder quantity). The Soft Actor-Critic agent
+maximizes cumulative reward:
+\end{quote}
+
+\emph{R} = Revenue \emph{-} Ordering Cost \emph{-} Holding Cost \emph{-}
+Stockout Penalty (5)
+
+\begin{quote}
+trained in a simulation environment calibrated on real historical
+pharmacy transaction distributions.
+\end{quote}
+
+\subsection{Croston's Method Mathematical
+Formulation}\label{crostons-method-mathematical-formulation}
+
+\begin{quote}
+Croston's method separates the demand time-series into two separate
+components: non-zero demand size \emph{z\textsubscript{t}} and time
+interval between demands \emph{p\textsubscript{t}}. If demand
+\emph{y\textsubscript{t} \textgreater{}} 0 at time \emph{t}, then:
+
+\emph{z}ˆ\emph{\textsubscript{t}} = \emph{z}ˆ\textsubscript{\emph{t}-1}
++ \emph{$\alpha$}(\emph{y\textsubscript{t} - z}ˆ\textsubscript{\emph{t}-1}) (6)
+
+\emph{p}ˆ\emph{\textsubscript{t}} = \emph{p}ˆ\textsubscript{\emph{t}-1}
++ \emph{$\alpha$}(\emph{q - p}ˆ\textsubscript{\emph{t}-1}) (7)
+
+where \emph{q} represents the number of periods elapsed since the last
+non-zero demand, and \emph{$\alpha$} is a smoothing parameter (typically
+0\emph{.}1 \emph{$\le$ $\alpha$ $\le$} 0\emph{.}3). If demand \emph{y\textsubscript{t}}
+= 0:
+
+\emph{z}ˆ\emph{\textsubscript{t}} = \emph{z}ˆ\textsubscript{\emph{t}-1}
+(8)
+
+\emph{p}ˆ\emph{\textsubscript{t}} = \emph{p}ˆ\textsubscript{\emph{t}-1}
+(9)
+
+and the elapsed counter is incremented (\emph{q} = \emph{q} + 1). The
+final demand forecast is predicted as:
+\end{quote}
+
+\emph{y}ˆ\emph{t}+\emph{h}\textbar{}\emph{t}
+
+\begin{quote}
+\textsubscript{=} \uline{\emph{z}ˆ\emph{\textsubscript{t}}}
+\emph{p}ˆ\emph{\textsubscript{t}}
+
+(10)
+\end{quote}
+
+\subsection{ECOD and LOF Anomaly
+Models}\label{ecod-and-lof-anomaly-models}
+
+\begin{quote}
+ECOD is a fast, non-parametric anomaly detection algorithm that computes
+the empirical cumulative distribution function (ECDF) for each dimension
+\emph{d} of a sample \emph{x}:
+\end{quote}
+
+\uline{1}
+\textsuperscript{$\Sigma$}\includegraphics[width=0.10417in,height=0.12153in]{./media/image49.png}
+
+\begin{quote}
+\emph{F} (\emph{x} ) = I(\emph{x $\le$ x} )
+(11)\includegraphics[width=\linewidth,height=0.12153in,keepaspectratio]{./media/image49.png}\includegraphics[width=\linewidth,height=0.12153in,keepaspectratio]{./media/image49.png}\includegraphics[width=0.14097in,height=0.17708in]{./media/image49.png}\includegraphics[width=0.14375in,height=0.12153in]{./media/image49.png}\includegraphics[width=\linewidth,height=0.12153in,keepaspectratio]{./media/image49.png}
+\end{quote}
+
+\includegraphics[width=0.20139in,height=0.12153in]{./media/image49.png}
+
+\begin{quote}
+The anomaly score is calculated based on the tail probabilities:
+
+\emph{D}\includegraphics[width=0.25139in,height=0.52917in]{./media/image49.png}
+
+\emph{O}(\emph{x}) = max (\emph{-} log
+\emph{F\textsubscript{d}}(\emph{x\textsubscript{d}})\emph{, -} log(1
+\emph{- F\textsubscript{d}}(\emph{x\textsubscript{d}}))) (12)
+
+\emph{d}=1
+
+which captures both left-tail and right-tail outliers.
+
+LOF measures the local density deviation of a data point relative to its
+neighbors. The local reachability density (lrd) of point \emph{p} is:
+\end{quote}
+
+lrd\emph{\textsubscript{k}}(\emph{p}) = $\Sigma$
+
+\emph{o}$\in$\emph{N\textsubscript{k}}(\emph{p})
+
+\emph{\textbar N\textsubscript{k}}(\emph{p})\emph{\textbar{}}
+
+\begin{quote}
+reach-dist\emph{\textsubscript{k}}\includegraphics[width=1.74097in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+(13)
+\end{quote}
+
+(\emph{p, o})
+
+\begin{quote}
+where \emph{N\textsubscript{k}}(\emph{p}) is the \emph{k}-distance
+neighborhood of \emph{p}, and
+reach-dist\emph{\textsubscript{k}}(\emph{p, o}) =
+max(\emph{d\textsubscript{k}}(\emph{o})\emph{, d}(\emph{p, o})). The LOF
+score is then:
+\end{quote}
+
+\textsuperscript{$\Sigma$}
+\uline{lrd\emph{\textsubscript{k}}(\emph{o})}\includegraphics[width=1.46806in,height=0.25278in]{./media/image49.png}\includegraphics[width=0.32569in,height=0.21181in]{./media/image49.png}\includegraphics[width=0.28819in,height=0.21181in]{./media/image49.png}
+
+\emph{\textsuperscript{k} \textbar N}
+(\emph{p})\emph{\textbar{}}\includegraphics[width=\linewidth,height=0.12153in,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+An LOF score close to 1 indicates a normal point, while a score
+significantly greater than 1 indicates an outlier.
+\end{quote}
+
+\subsection{Model Hyperparameters}\label{model-hyperparameters}
+
+\begin{quote}
+The hyperparameter selections for the MLP trajectory generator and the
+SAC replenishment agent are summarized below:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{MLP Trajectory Model}: Dense input layer (1 node), 3 hidden
+  layers (64, 128, 64 nodes with ReLU activation), and output layer (500
+  nodes, representing 100 timesteps for 5 servos). Trained using the
+  Adam optimizer (learning rate \emph{$\eta$} = 0\emph{.}001, batch size 32)
+  over 500 epochs with Mean Squared Error (MSE) loss.
+\item
+  \textbf{SAC Agent}: Actor network with 2 hidden layers (256 nodes,
+  ReLU) outputting mean and standard deviation of grasp sizes. Critic
+  networks with 2 hidden layers (256 nodes, ReLU) modeling Q-values.
+  Learning rate is 0\emph{.}0003, discount factor \emph{$\gamma$} =
+  0\emph{.}99, and target update coefficient \emph{$\tau$} = 0\emph{.}005,
+  utilizing a 1,000,000 transition capacity experience replay buffer.
+\end{itemize}
+
+\section{Prescription Dataset Collection and Ground Truth
+Annotation}\label{prescription-dataset-collection-and-ground-truth-annotation}
+
+\begin{quote}
+To train, calibrate, and evaluate the prescription transcription
+pipeline, we collected an au-thentic dataset of 500 physical
+prescription papers from local polyclinics and community pharmacies
+across Alexandria and Cairo, Egypt. These documents exhibit the diverse
+hand-writing styles, fading ink, non-standard cursive abbreviations, and
+physical wrinkles typical of real-world clinical environments.
+
+The dataset capture and preprocessing workflow proceeded as follows:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Image Acquisition}: High-resolution digital photographs of the
+  prescriptions were captured using mid-range mobile phone cameras under
+  three distinct ambient lighting levels: bright day/fluorescent
+  lighting (250 lm), moderate room lighting (100 lm), and low-light
+  evening setups (15 lm).
+\item
+  \textbf{Ground Truth Transcription}: To establish a rigorous baseline
+  for evaluation, three licensed pharmacists independently transcribed
+  each prescription. They manually ex-tracted the brand name, active
+  substance, dosage strength (e.g., 50 mg, 1 g), formu-lation type
+  (tablet, syrup, injection), and dosage frequency instructions.
+  Discrepancies between the transcribers were resolved via a majority
+  consensus panel, resulting in a clean, standardized ground truth
+  dataset.
+\item
+  \textbf{Reference Drug Directory}: In parallel, we built a local
+  reference database containing 15,000+ drug brand and generic names.
+  This database consolidated regional datasets from the Egyptian Drug
+  Authority (EDA), U.S. FDA National Drug Code (NDC) Directory, and
+  scraped web metadata from Vezeeta Egypt.
+\end{itemize}
+
+\section{OCR Core and Search Strategy
+Selection}\label{ocr-core-and-search-strategy-selection}
+
+\begin{quote}
+When a prescription image is received by the APMS system, it undergoes
+localized binariza-tion and contrast adjustment before execution. A
+local Vision-Language Model (GLM-4 OCR running offline via Ollama)
+transcribes the cursive handwritten strokes. Due to the high rate of
+spelling discrepancies in handwritten medical cursive, the raw text
+cannot be queried directly in the relational database.
+
+We selected and prioritized a \textbf{Seven-Stage Sequential Fallback
+Search Engine} to resolve typographical noise, structured as follows:
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \textbf{Stage 1: Exact Match}: Performs a direct, case-sensitive
+  lookup on the local database. If the raw OCR output matches a
+  registered trade name exactly, the system returns the item instantly
+  with 100\% confidence, bypassing further processing.
+\item
+  \textbf{Stage 2: Normalized Match}: Strips punctuation, spaces,
+  non-standard casing, and hyphens (e.g. ``mil-ga'' \emph{$\rightarrow$} ``milga''),
+  running a fast set-membership query.
+\item
+  \textbf{Stage 3: Smart OCR Fix (Visual Confusion Correction)}:
+  Substitutes character strings based on historical optical errors
+  (e.g., cursive ``rn'' misread as ``m'', or vertical ``l'' misread as
+  ``1'').
+\item
+  \textbf{Stage 4: Elasticsearch Indexing}: Queries an Elasticsearch
+  node utilizing n-gram tokenization and inverted indexes, mapping
+  matching components to trade names.
+\item
+  \textbf{Stage 5: Fuzzy Search (Jaro-Winkler Distance)}: Performs a
+  character edit-distance query. It prioritizes differences near the end
+  of strings to protect drug prefix similarity (e.g. distinguishing
+  ``Milga'' from ``Miltown''). If a candidate scores \emph{$\ge$}
+  0\emph{.}85, the loop exits.
+\item
+  \textbf{Stage 6: Semantic Search (Sentence-Transformers)}: Computes
+  dense vector rep-resentations of the text, comparing cosine
+  similarities against pre-computed em-beddings of generic drug classes.
+  This resolves severe handwriting distortions by capturing phonetic and
+  therapeutic context.
+\item
+  \textbf{Stage 7: External Web Crawler Fallback}: Direct REST API
+  requests query the live Vezeeta Egypt directory, catching recently
+  registered or unindexed medications.
+\end{enumerate}
+
+\includegraphics[width=5.00625in,height=3.36in]{./media/image65.png}
+
+\begin{quote}
+Fig. 9: Sequential Search Decision Tree with Early-Exit Confidence
+Thresholding
+
+The characteristics and computational complexities of the search stages
+are detailed in Table \textbf{??}.
+
+TABLE 5: Search Method Characteristics
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0910}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1714}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1224}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.5650}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Priority}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Method}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Complexity}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Justification for Priority Order}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Exact Match
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\emph{O}(1)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Instant lookup, 100\% precision; matches 30--40\% of clear inputs
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Normalized Match
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\emph{O}(1)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Handles case/whitespace variations without expensive string metrics
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Smart OCR Fix
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\emph{O}(\emph{V} log \emph{N} )
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Corrects common visual confusion variants (m \emph{$\rightarrow$} rn, l \emph{$\rightarrow$} 1)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Elasticsearch
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\emph{O}(log \emph{N} )
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Leverages inverted index and n-grams for fast approximate matching
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+4
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Fuzzy Search
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\emph{O}(\emph{N $\cdot$ M} )
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+C++ accelerated Jaro-Winkler metric; handles arbitrary misspellings
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+5
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Semantic Search
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\emph{O}(\emph{D $\cdot$ K})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Dense embeddings; handles severe handwriting distortion via context
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+6
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+External Crawler
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\emph{O}(1)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Query external drug registry; resolves new or unindexed local items
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\section{Consensus Voting vs. Sequential Fallback
+Strategy}\label{consensus-voting-vs.-sequential-fallback-strategy}
+
+\begin{quote}
+The decision to utilize a sequential fallback strategy rather than a
+parallel consensus voting model was driven by critical performance
+trade-offs. In a parallel consensus architecture, every search method
+must execute, resulting in high CPU loads and API query volumes.
+
+Furthermore, incorrect candidates returning from multiple weak
+algorithms can accumulate votes and outrank the correct, high-confidence
+match. The sequential fallback approach enforces early-exit logic,
+halting execution as soon as a method satisfies the safety confidence
+score (85\%). A comparative summary is presented in Table \textbf{??}.
+
+TABLE 6: Comparison of Search Architectures
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1809}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3487}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3304}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Aspect}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Consensus Voting (Parallel)}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Sequential Fallback (APMS)}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Execution Flow
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+All methods execute concurrently
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Methods execute in strict priority order
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Average Operations
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+35+ search operations per query
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+2.5 search operations per query
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+False Positive Risk
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+High (weak candidates accumulate votes)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Low (early exit limits fallback scope)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Computational Cost
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+High (always runs neural embeddings)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Moderate (lazy evaluation)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Predictability
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Low (unpredictable voter interactions)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+High (deterministic execution path)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Debuggability
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Complex (requires parsing all outputs)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Simple (logs the early-exiting method)
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\section{Dynamic Camera Zoom and Distance Feedback
+Loop}\label{dynamic-camera-zoom-and-distance-feedback-loop}
+
+\begin{quote}
+To ensure robust transcription under physical variations, we implemented
+a closed-loop hardware-software distance adjustment feedback system. If
+the OCR confidence score or the best-matched candidate Jaro-Winkler
+score is below 80\%, the system assumes the prescription image is
+blurry, low contrast, or too far.
+
+Rather than failing or prompting the user immediately, the system
+initiates the following loop:
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  The backend dispatches a command to the ESP32 to actuate a
+  servo-driven linear rail, moving the workspace camera 5.0 cm closer to
+  the target prescription surface.
+\item
+  If physical movement limits are reached, the system issues a digital
+  zoom command (+10\% focal magnification) to the IP camera stream.
+\item
+  A new image frame is captured and re-injected into the GLM-OCR model.
+\end{enumerate}
+
+\begin{quote}
+This feedback loop runs up to 3 times iteratively. If the confidence
+remains below the safety threshold after 3 attempts, the system halts
+and raises a visual alert on the PharmaSys dashboard, requesting manual
+pharmacist review.
+\end{quote}
+
+\section{Arabic Processing and Metadata/Dosage
+Filtration}\label{arabic-processing-and-metadatadosage-filtration}
+
+\begin{quote}
+Prescriptions in the Egyptian market present a challenging mix of
+English brand names and handwritten Arabic dosage instructions,
+accompanied by standard physician letterheads (such as ``Dr.'',
+``Professor'', ``Rx'', or ``R/''). To extract clean, structured clinical
+instructions, a specialized filtering and parsing regex pipeline was
+designed:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Header and Metadata Strip}: Pre-compiled regular expressions
+  scan the raw text to detect and remove non-medication headers (e.g.
+  physician names, contact numbers, clinics) and standard symbols
+  (``Rx'', ``R/'').
+\item
+  \textbf{Arabic Script Isolation}: Arabic Unicode script blocks are
+  isolated and separated from English trade names. While the English
+  brand names are processed through the fallback search directory, the
+  Arabic text is routed directly to the Dosage Parser.
+\item
+  \textbf{Structural Dosage Parsing}: A dedicated parser evaluates
+  clinical frequency expres-sions. It maps shorthand annotations (such
+  as ``3*1'', ``3x1'', ``3/1'') or Arabic phrases (such as ``Thalath
+  marrat yawmiyan'' -- three times daily, ``Koll 8 sa'at'' -- every 8
+  hours, or ``Qurs sabahan wa masa'an'' -- one tablet morning and
+  evening) into standardized scheduling parameters.
+\item
+  \textbf{Dosing Volume Extraction}: If the parser identifies a complex
+  fractional instruction (such as ``3*1/2'' -- three times, half a
+  tablet each), it parses the value into a numerical dosing rate
+  (dosage\_frequency = 3, quantity\_per\_dose = 0.5). This structured
+  output is transmitted directly to the dispensing queue, preventing
+  hardware dispensing errors.
+\end{itemize}
+
+\begin{quote}
+To prevent incorrect drug dispensing, a \textbf{Five-Layer Safety
+Filter} is implemented as detailed in Table \textbf{??}.
+
+TABLE 7: Safety Filter Architecture Layers
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0747}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1967}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1859}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.4509}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Layer}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Name}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Input Stage}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Filtering Mechanism}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+1
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Empty Reject
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Raw VLM text
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Blocks empty/whitespace OCR text, returning early
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+error code
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+2
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Language Strip
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Transcribed output
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Regex filters Arabic Unicode strings, separating dosage
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+instructions
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+3
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Common Word Block
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Sanitized query
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Blocklist of 120+ non-drug words (``eye'', ``tablet'', etc.)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+4
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Length Check
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Candidate validation
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Blocks matches where string lengths differ by \emph{$\ge$} 50\%
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+5
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Pharmacist Guard
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Dashboard trigger
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Manual confirmation required prior to dispatching
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+robotic PWM
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\section{Web Crawler API-Based Design
+Justification}\label{web-crawler-api-based-design-justification}
+
+\begin{quote}
+The external fallback crawler targets the Vezeeta Egypt platform to
+query unindexed local medications. Rather than employing HTML parsing
+libraries (such as BeautifulSoup) that scrape static layouts, the
+crawler communicates directly with Vezeeta's backend REST API endpoints.
+This design is justified by six technical reasons:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Reason 1: Single Page Application (SPA) architecture}:
+  Vezeeta's frontend is com-piled as an SPA. Product data is not
+  embedded in the initial static HTML payload, but loaded dynamically.
+\item
+  \textbf{Reason 2: Empty initial HTML containers}: Scrapers using
+  BeautifulSoup only see empty DOM containers or loading indicators
+  prior to client-side script execution.
+\item
+  \textbf{Reason 3: Direct API access}: By calling the REST API
+  endpoints directly, the crawler receives structured JSON structures
+  containing price, shape, and availability.
+\item
+  \textbf{Reason 4: Data cleanliness}: JSON responses map directly to
+  our database schema without requiring fragile regex cleaning or
+  complex XPath parsing of nested tables.
+\item
+  \textbf{Reason 5: Endpoint stability}: Frontend layouts and CSS class
+  names undergo fre-quent changes during UI deployments. REST endpoints
+  remain stable to ensure frontend-backend compatibility.
+\item
+  \textbf{Reason 6: Computational efficiency}: Eliminates the need to
+  spawn headless browser instances (such as Selenium), reducing server
+  memory overhead from gigabytes to kilobytes.
+\end{itemize}
+
+\section{Teleoperation and Motion Recording
+Protocol}\label{teleoperation-and-motion-recording-protocol}
+
+\begin{quote}
+To populate the Motion Library (Phase 1), the system implements a
+real-time computer vision teleoperation loop. The human operator
+controls the robotic hand remotely. A keyboard interface captures
+recording events:
+\end{quote}
+
+\begin{itemize}
+\item
+  R: Start recording servo angles and HC-SR04 distance values.
+\item
+  S: Stop and serialize the list to a JSON file named
+  medicine-distance-N.json.
+\item
+  P: Play back the recorded trajectory for verification.
+\item
+  q: Exit teleoperation mode.
+\end{itemize}
+
+\begin{quote}
+Each serialized trajectory is saved as an array of frames, adhering to
+the following JSON
+schema:\includegraphics[width=6.36181in,height=1.11528in]{./media/image49.png}
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0925}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0581}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0465}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0465}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0465}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0581}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0692}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+{[}0.000,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+{[}50,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50{]},
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+6.5{]},
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+{[}0.050,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+{[}55,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+53,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+52,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50{]},
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+6.5{]},
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+{[}0.100,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+{[}62,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+58,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+56,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+52,
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+51{]},
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+6.5{]},
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+This trajectory format provides both the target joint posture and the
+distance vector, serving as direct inputs for the MLP neural network
+training.
+\end{quote}
+
+\subsection{ESP32 Serial Communication
+Protocol}\label{esp32-serial-communication-protocol}
+
+\begin{quote}
+To ensure robust coordinate transmission and prevent packet loss over
+serial interfaces, a strict binary/character framing protocol was
+defined:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Control command packet (PC to ESP32)}: Transmitted at 115200
+  baud, matching the format
+  "A\textless a1\textgreater,\textless a2\textgreater,\textless a3\textgreater,\textless a4\textgreater,\textless a5\textgreater{}\emph{\textbackslash{}}n",
+  where a\_i is the integer angle (50$^\circ$ \emph{$\le$
+  a\textsubscript{i} $\le$} 150$^\circ$).
+\item
+  \textbf{Telemetry feedback packet (ESP32 to PC)}: Sent at 50 Hz,
+  formatted as
+  "D\textless dist\textgreater S\textless s1\textgreater,...,\textless{}
+\end{itemize}
+
+\begin{quote}
+providing filtered ultrasonic distances, current encoder values, and
+system error flags (e.g. timeout, sensor failure).
+\end{quote}
+
+\section{Autonomous Medicine Mobile Robot (Car
+Subsystem)}\label{autonomous-medicine-mobile-robot-car-subsystem}
+
+\begin{quote}
+To extend the APMS dispensing ecosystem, an autonomous mobile
+pick-and-place robot (referred to as the mobile robot or car subsystem)
+was integrated. The mobile robot navigates the pharmacy floor,
+identifies target medicine packages, performs distance-adaptive visual
+servoing, and transports the selected items to a designated drop-off
+box.
+\end{quote}
+
+\subsection{Mobile Chassis Hardware and Pin
+Mapping}\label{mobile-chassis-hardware-and-pin-mapping}
+
+\begin{quote}
+The mobile platform is constructed around a four-wheel
+differential-drive chassis. It is driven by four brushed DC gear motors
+powered by a rechargeable battery pack. A dual H-bridge L298N motor
+driver manages the motor direction and speed. Low-level control is
+executed by an Arduino Uno microcontroller, while wireless communication
+is handled via an HC-05 Bluetooth serial module. The perception layer
+consists of a USB webcam connected to the host computer, which executes
+the high-level computer vision models. The physical specifications of
+the hardware components are detailed in Table \textbf{??}.
+
+TABLE 8: Mobile Robot Hardware Components and Specifications
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1595}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3060}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2648}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Component}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Specification}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Role in Subsystem}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Arduino Uno
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+ATmega328P, 16 MHz, 32KB Flash
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Low-level command execution
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+L298N Driver
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Dual H-Bridge, 2A per channel
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+DC motor power driving
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+DC Motors (x4)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+3-6V Gear motors, 1:48 gear ratio
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Wheeled locomotion
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+HC-05 Bluetooth
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Serial SPP, 2.4 GHz, 9600 baud
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Wireless communication link
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Webcam
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+USB interface, 640x360 resolution
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Visual input for perception
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Servo Gripper
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+3D-printed arm, SG90 servo motor
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Object manipulation and pick
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+The electrical connection between the Arduino Uno and the L298N motor
+driver pins is mapped in Table \textbf{??}.
+
+TABLE 9: Arduino-to-L298N Pin Mapping
+\end{quote}
+
+\includegraphics[width=3.24236in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+\textbf{Arduino Pin L298N Pin Function}
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1420}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.0872}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2708}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Digital Pin 7
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+IN1
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Left Motor direction control
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Digital Pin 6
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+IN2
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Left Motor direction control
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Digital Pin 5
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+IN3
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Right Motor direction control
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Digital Pin 4
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+IN4
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Right Motor direction control
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\includegraphics[width=4.47562in,height=1.68219in]{./media/image8.jpg}
+
+\begin{quote}
+Fig. 10: System Architecture diagram showing the execution layer,
+decision layer, and perception layer for the mobile robot.
+\end{quote}
+
+\includegraphics[width=4.42406in,height=2.8125in]{./media/image70.jpg}
+
+\begin{quote}
+Fig. 11: Hardware architecture and communication flow diagram showing
+the connection between the host PC, Arduino, L298N, HC-05, and motors.
+\end{quote}
+
+\subsection{Bluetooth Locomotion Control
+Protocol}\label{bluetooth-locomotion-control-protocol}
+
+\begin{quote}
+Locomotion commands are transmitted from the host PC to the Arduino Uno
+using a lightweight single-character Bluetooth protocol. The host PC
+computes visual servoing adjustments and transmits characters over
+virtual serial COM ports. The Arduino reads the incoming serial byte and
+immediately switches the digital output pins to configure the motor
+state as shown in Table \textbf{??}.
+
+TABLE 10: Motor Locomotion Command Protocol
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1123}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1717}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4005}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Command}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Locomotion State}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Motor Pin Configurations}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+'F'
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Move Forward
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+IN1=HIGH, IN2=LOW, IN3=LOW, IN4=HIGH
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+'B'
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Move Backward
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+IN1=LOW, IN2=HIGH, IN3=HIGH, IN4=LOW
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+'R'
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Turn Right
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+IN1=HIGH, IN2=LOW, IN3=HIGH, IN4=LOW
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+'L'
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Turn Left
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+IN1=LOW, IN2=HIGH, IN3=LOW, IN4=HIGH
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+'S'
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Stop Locomotion
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+IN1=LOW, IN2=LOW, IN3=LOW, IN4=LOW
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\subsection{Dataset Preparation, Augmentation, and Transfer
+Learning}\label{dataset-preparation-augmentation-and-transfer-learning}
+
+\begin{quote}
+To train the YOLO object detection model, a custom dataset of local
+medicine packages (Milga, Antopral, and Staturic) was collected using
+the Roboflow platform. The initial dataset contained 150 raw images. Due
+to the small dataset size, the model was highly susceptible to
+overfitting and poor generalization. To mitigate this, Roboflow was
+configured to generate
+
+3 augmented samples per image using rotation
+(\emph{$\pm$}15$^\circ$), horizontal shear
+(\emph{$\pm$}10$^\circ$), and vertical shear
+(\emph{$\pm$}10$^\circ$). This expanded the dataset to 327
+images, split into 297 training images and 30 validation images.
+
+TABLE 11: Initial Dataset Class Distribution
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0969}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1237}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0846}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3287}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Class ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Class Name}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Images}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Description}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Milga
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Primary target for pick-and-place trials
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Antopral
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Secondary class (distractor)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Staturic
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Tertiary class (distractor)
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+TABLE 12: Dataset Augmentation Parameters
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1304}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4290}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Augmentation Technique}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Value Range}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Design Rationale}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Rotation
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{$\pm$}15\emph{$^\circ$}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Simulates rotation variations of packages on floor
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Horizontal Shear
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{$\pm$}10\emph{$^\circ$}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Simulates camera pitch and skew angles
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Vertical Shear
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{$\pm$}10\emph{$^\circ$}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Simulates non-orthogonal viewing perspectives
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Multiplication Factor
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+3x
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Generates 3 unique augmented variations per image
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+\includegraphics[width=5.32812in,height=3.44271in]{./media/image79.jpg}
+
+Fig. 12: Examples of dataset augmentation: original image, rotation,
+horizontal/vertical shear, and combined transformations.
+
+To maximize detection performance, we applied transfer learning from the
+pre-trained COCO dataset checkpoint (yolov8n.pt). Crucially, we froze
+the first 10 layers of the YOLO backbone (freeze=10) during training.
+This prevented the model from modifying the low-level visual feature
+extractors (lines, edges, textures) already learned from COCO,
+fine-tuning only the higher-level detection head on our medicine
+dataset, thus protecting the model from catastrophic forgetting. The
+overall training configuration is summarized in Table \textbf{??}.
+
+TABLE 13: Mobile YOLO Training Configuration
+\end{quote}
+
+\includegraphics[width=3.62639in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+\textbf{Parameter Configuration Value}
+\end{quote}
+
+\includegraphics[width=3.62639in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+Pre-trained Model Base yolov8n.pt (COCO dataset) Backbone Freezing Layer
+freeze=10 (layers 1--10 frozen) Optimizer AdamW (learning rate = 0.001)
+
+Batch Size 16
+
+Training Epochs 120 (with early stopping patience = 30) Input Resolution
+640 \emph{$\times$} 640 pixels
+
+Augmented Dataset Size 327 images (297 train, 30 validation)
+\end{quote}
+
+\includegraphics[width=3.62639in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+\includegraphics[width=5.27437in,height=2.54052in]{./media/image81.jpg}
+
+Fig. 13: YOLOv8 transfer learning and backbone freezing strategy,
+freezing layers 1--10 and fine-tuning the detection head.
+\end{quote}
+
+\subsection{YOLOv8-SAHI Perception and ArUco
+Detection}\label{yolov8-sahi-perception-and-aruco-detection}
+
+\begin{quote}
+During autonomous navigation, the perception pipeline runs YOLOv8n
+enhanced by Slicing Aided Hyper Inference (SAHI). SAHI splits the 640
+\emph{$\times$} 360 camera frame into overlapping 320 \emph{$\times$} 320 pixel
+slices, runs inference on each slice, and merges bounding boxes using
+Non-Maximum Suppression (NMS). This addresses the small-object detection
+issue when the robot is far from the medicine box. For the drop-off
+phase, the robot uses OpenCV's ArUco marker detection module. It queries
+the
+DICT\pandocbounded{\includegraphics[keepaspectratio]{./media/image82.png}}4X4\pandocbounded{\includegraphics[keepaspectratio]{./media/image82.png}}50
+dictionary to locate marker ID 0 mounted on the drop-off box. Frames are
+converted to grayscale before detection to increase edge contrast. The
+center \emph{X} coordinate and bounding box area are computed to drive
+the visual servoing control.
+
+TABLE 14: SAHI Inference Configuration Parameters
+\end{quote}
+
+\includegraphics[width=2.53264in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+\textbf{SAHI Parameter Configuration Value}
+\end{quote}
+
+\includegraphics[width=2.53264in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+Slice Height 320 pixels
+
+Slice Width 320 pixels Overlap Height Ratio 0.2 Overlap Width Ratio 0.2
+Confidence Threshold 0.78
+
+Inference Device CUDA GPU (cuda:0)
+\end{quote}
+
+\includegraphics[width=2.53264in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+\includegraphics[width=3.43125in,height=4.475in]{./media/image85.jpg}
+
+Fig. 14: YOLOv8-SAHI perception and visual servoing control flowchart.
+
+\includegraphics[width=3.41667in,height=5.11333in]{./media/image59.jpg}
+
+Fig. 15: ArUco marker detection and visual servoing docking flowchart.
+\end{quote}
+
+\subsection{Finite State Machine and Control
+Loop}\label{finite-state-machine-and-control-loop}
+
+\begin{quote}
+The navigation and manipulation workflow is orchestrated by an 8-phase
+Finite State Machine (FSM). Visual servoing adjusts the robot steering
+by computing the error between the detected bounding box center
+\emph{X\textsubscript{bbox}} and the frame center
+\emph{X\textsubscript{center}} (320 pixels). The alignment error
+\emph{e} is defined as:
+
+\emph{e} = \emph{Xbbox - Xcenter} (15)
+
+If \emph{\textbar e\textbar{} \textgreater{} $\theta$\textsubscript{align}}
+(where alignment threshold \emph{$\theta$\textsubscript{align}} = 80 pixels),
+the robot sends turn commands ('L' or 'R') to align with the target.
+Once aligned, the robot moves forward ('F'). The robot stops locomotion
+('S') and transitions states when the bounding box average size exceeds
+the stop distance threshold (200 pixels for medicine, 180 pixels for the
+drop-off box). The FSM phase sequence and control parameters are
+detailed in Table \textbf{??} and Table \textbf{??}.
+\end{quote}
+
+TABLE 15: Mobile Robot Finite State Machine (FSM) Phases
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1011}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1643}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5232}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Phase ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{State Name}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Description}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+SEEK\_MED
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Search environment and approach target medicine box
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+WAIT\_ARM\_MED
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Pause locomotion, trigger robotic arm grasp (10 seconds)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+BACKWARD\_1
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Execute pulsed backward motion away from shelf (1.5 seconds)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+SEEK\_BOX
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Rotate to search for ArUco marker ID 0
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+4
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+APPROACH\_BOX
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Navigate and align with drop-off box using visual servoing
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+5
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+WAIT\_ARM\_BOX
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Trigger robotic arm deposit sequence (10 seconds)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+6
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+BACKWARD\_2
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Move backward away from box (1.5 seconds)
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+7
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+DONE
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Stop operation, display completion state
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+TABLE 16: Visual Servoing Control Loop Parameters
+
+\includegraphics[width=3.675in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+\textbf{Parameter Operational Value}
+\end{quote}
+
+\includegraphics[width=3.675in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+Frame Center (\emph{Xcenter} ) 320 pixels Alignment Zone
+(\emph{$\theta$\textsubscript{align}}) \emph{$\pm$}80 pixels
+
+Stop Threshold (Medicine) 200 pixels (average bounding box size) Stop
+Threshold (Box) 180 pixels (average bounding box size) Arm Gantry Grab
+Delay 10 seconds
+
+Pulsed Backward Duration 1.5 seconds (0.12s pulse on, 0.1s off) Search
+Sweep Timeout 2.0 seconds per rotation step
+\end{quote}
+
+\includegraphics[width=3.675in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\chapter{IMPLEMENTATION \& RESULTS}\label{implementation-results}
+
+\section{Software Code
+Implementation}\label{software-code-implementation}
+
+\begin{quote}
+The system implementation consists of core code blocks across the
+robotic hand, backend, and frontend.
+\end{quote}
+
+\subsection{MediaPipe Landmark Mimicry and
+Filter}\label{mediapipe-landmark-mimicry-and-filter}
+
+\begin{quote}
+The MediaPipe tracker module hand\_memic.py runs a continuous video
+frame processing loop. The landmarks are processed to compute normalized
+finger extension ratios, which are mapped to servo
+angles:\includegraphics[width=6.36736in,height=2.28681in]{./media/image49.png}
+
+These raw ratios are converted to servo command angles using per-finger
+linear interpolation ranges:
+
+\emph{A} = clamp \textsuperscript{\uline{\emph{Ri - Ri,}min}} \emph{$\times$} 100
++ 50\emph{,} 50\emph{,} 150
+(16)\includegraphics[width=\linewidth,height=0.12153in,keepaspectratio]{./media/image49.png}
+
+\emph{Ri,}max \emph{- Ri,}min
+\end{quote}
+
+\subsection{Distance Filtering and Stability
+Control}\label{distance-filtering-and-stability-control}
+
+\begin{quote}
+The distance reading obtained from the HC-SR04 palm sensor is noisy. We
+implement the
+
+DistanceFilter
+class:\includegraphics[width=6.36736in,height=3.16181in]{./media/image49.png}
+
+\includegraphics[width=5.00094in,height=6.84125in]{./media/image61.jpg}
+
+Fig. 16: Signal Flow: Circular Median Filter and Stability Verification
+Pipeline
+\end{quote}
+
+\subsection{Autonomous Finite State
+Machine}\label{autonomous-finite-state-machine}
+
+\begin{quote}
+The autonomous controller runs an active loop running at 50 Hz. The
+state transitions are managed via the AutoState enumeration:
+
+\includegraphics[width=4.92708in,height=9.875in]{./media/image57.png}
+
+Fig. 17: State Machine Pipeline: Ultrasonic Detection to Final Robotic
+Grasp Action
+\end{quote}
+
+\begin{itemize}
+\item
+  READY: The sensor detects an object at a stable distance (e.g., 6.5
+  cm). The system queries the Motion Library to retrieve the matching
+  trajectory.
+\item
+  GRABBING: Executes time-based playback of the trajectory, writing
+  servo command bytes "Aa1,a2,a3,a4,a5\emph{\textbackslash{}}n" to the
+  serial port.
+\item
+  HOLDING: The hand holds the object. A separate daemon thread triggers
+  OCR pro-cessing to identify the label.
+\item
+  RELEASING: Once the OCR resolves and backend dispatch signals
+  completion, the hand opens all fingers and releases the package,
+  pausing 2 seconds before re-entering detection.
+\end{itemize}
+
+\subsection{Asynchronous OCR Concurrency
+Timeline}\label{asynchronous-ocr-concurrency-timeline}
+
+\begin{quote}
+OCR execution takes 1.8 seconds on average. If performed in the main
+control loop, it would cause the state machine to freeze. We offload the
+execution to a daemon thread:
+\end{quote}
+
+\includegraphics[width=4.55729in,height=4.20729in]{./media/image62.jpg}
+
+\begin{quote}
+Fig. 18: Concurrency Timeline: Main Control Loop and Asynchronous VLM
+Daemon Thread
+\end{quote}
+
+\section{Fullstack Screenshots and
+Wireframes}\label{fullstack-screenshots-and-wireframes}
+
+\subsection{PharmaSys Dashboard}\label{pharmasys-dashboard}
+
+\begin{quote}
+The PharmaSys staff interface is designed for desktop and tablet
+screens. It provides real-time status widgets, active order lists, and
+the AI command center.
+\end{quote}
+
+\includegraphics[width=2.83333in,height=1.64583in]{./media/image36.png}\includegraphics[width=2.85417in,height=1.625in]{./media/image5.png}
+
+\begin{quote}
+(a) Login Screen (b) Main Overview Dashboard
+
+(c) Prescription Screen (d) Robot
+Panel\includegraphics[width=2.83333in,height=1.58333in]{./media/image12.png}\includegraphics[width=2.85417in,height=1.625in]{./media/image11.png}
+
+(e) Invoice Screen (f) Medicines Inventory
+Stock\includegraphics[width=2.82299in,height=1.57292in]{./media/image38.png}\includegraphics[width=2.875in,height=1.55208in]{./media/image22.png}
+
+Fig. 19: PharmaSys Staff Enterprise Interfaces
+
+\includegraphics[width=3.07928in,height=1.68229in]{./media/image14.png}
+\end{quote}
+
+Figure: Initial Wireframe
+
+\subsection{Roshetety Patient Mobile
+App}\label{roshetety-patient-mobile-app}
+
+\begin{quote}
+Roshetety allows patients to capture prescriptions, select medicines,
+and track their preparation progress.
+\end{quote}
+
+\includegraphics[width=1.18229in,height=2.59858in]{./media/image3.jpg}\includegraphics[width=1.14583in,height=2.51845in]{./media/image69.jpg}\includegraphics[width=1.16146in,height=2.52647in]{./media/image9.jpg}\includegraphics[width=1.17708in,height=2.53945in]{./media/image20.jpg}
+
+(a) Splash Screen (b)Homepage (c) Track Order (d) Prescription Capture
+\includegraphics[width=1.19271in,height=2.58215in]{./media/image34.jpg}\includegraphics[width=1.17152in,height=2.57734in]{./media/image47.jpg}\includegraphics[width=1.15625in,height=2.56809in]{./media/image58.jpg}
+
+\begin{quote}
+(e) Order Waitlisted (b) Order Dispatched (c) Order Completed
+
+Fig. 20: Roshetety Mobile App Client Screens
+\end{quote}
+
+\section{AI Command Center
+Screenshots}\label{ai-command-center-screenshots}
+
+\begin{quote}
+The AI analytics outputs are integrated as a dedicated command center
+within PharmaSys:
+
+\includegraphics[width=2.99844in,height=1.59062in]{./media/image2.jpg}
+\includegraphics[width=2.99844in,height=1.59219in]{./media/image10.jpg}
+
+(a) Market Demand \& Near-Stockout (b) Expiry Risk Timeline
+\end{quote}
+
+\includegraphics[width=2.99844in,height=1.59062in]{./media/image19.jpg}\includegraphics[width=3in,height=1.59375in]{./media/image26.jpg}
+
+\begin{quote}
+(c) Clearance Discount Recommendations (d) Dead Stock \& Non-Moving
+Inventory
+\end{quote}
+
+Fig. 21: APMS AI Command Center Widgets
+
+\section{Experimental Results and
+Discussion}\label{experimental-results-and-discussion}
+
+\subsection{Robotic Grasping Success
+Rates}\label{robotic-grasping-success-rates}
+
+\begin{quote}
+We evaluated the physical robotic hand grasping accuracy on typical
+medicine boxes (MILGA, NEXICURE, STATURIC, EXAMIDE) across 300
+experimental trials (50 trials per distance step). A grasp is classified
+as successful if the hand grabs the package, lifts it, and retains it
+for 6 seconds without slippage.
+\end{quote}
+
+TABLE 17: Robotic Grasping Success Rate by Distance
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1398}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2116}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1703}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.4588}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Distance (cm)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Successful Grasps / 50}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Success Rate (\%)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Notes}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+4.0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+44
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+88.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Occasional over-squeeze at minimum range
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+5.0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+46
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+92.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Optimal performance; matches centroid of training data
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+6.0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+45
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+90.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Consistent, reliable grasping
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+7.0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+43
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+86.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Minor tendon slippage observed
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+8.0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+41
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+82.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Nearest-neighbor interpolation boundary
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+9.0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+38
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+76.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Reduced grip enclosure near maximum limit
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Overall}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{257 / 300}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{85.7\%}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Average across operational space}
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+The 85.7\% overall success rate matches results from advanced research
+platforms in literature. The success rate decreases near the boundaries
+of the workspace (9.0 cm) due to the mechanical limits of finger
+compliance and reduced tendon extension.
+\end{quote}
+
+\subsection{OCR Recognition Accuracy under Lighting
+Conditions}\label{ocr-recognition-accuracy-under-lighting-conditions}
+
+\begin{quote}
+GLM-OCR performance was evaluated under three ambient light intensities
+(Bright, Moder-ate, Dim) across 200 drug package samples.
+\end{quote}
+
+TABLE 18: OCR Drug Identification Accuracy by Lighting Level
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1601}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1925}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2193}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1646}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1443}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Medication}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Bright (250 lm) (\%)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Moderate (100 lm) (\%)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Dim (15 lm) (\%)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Sample Count}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+MILGA
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+96.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+90.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+74.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+NEXICURE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+94.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+88.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+70.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+STATURIC
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+92.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+86.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+68.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+EXAMIDE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+96.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+90.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+72.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+50
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Overall Average}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{94.5\%}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{88.5\%}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{71.0\%}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{200}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+The results show that OCR accuracy is highly dependent on ambient
+lighting. Under dim lighting (71.0\% accuracy), low contrast between
+text and package design causes transcription failures. Adding a small
+LED strip inside the dispensing station resolved this issue.
+\end{quote}
+
+\subsection{Comparison of OCR Pipeline
+Performance}\label{comparison-of-ocr-pipeline-performance}
+
+\begin{quote}
+To evaluate the effectiveness and custom features of the APMS OCR
+pipeline, we performed a comparative evaluation against two prominent
+baselines: Tesseract OCR (v5.3.0, representing standard open-source OCR
+engines) and Google Cloud Vision API (representing state-of-the-art
+commercial Cloud VLMs).
+
+The evaluation was conducted on our annotated validation set of 500
+local Egyptian handwritten prescriptions, focusing on the Character
+Error Rate (CER), Word Error Rate (WER), processing latency, and
+compliance with data sovereignty policies. The results are summarized in
+Table \textbf{??}.
+\end{quote}
+
+TABLE 19: Performance Comparison of OCR Engines on Handwritten
+Prescriptions
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2496}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1046}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1100}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1186}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1930}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1643}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{OCR Pipeline}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{CER (\%)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+\textbf{WER (\%)}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Latency (s)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{On-Premise Privacy}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Offline Support}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Tesseract OCR (v5.3)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+38.4\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+62.3\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.4
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Yes (Local)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Yes (Offline)
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Google Cloud Vision API
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+7.2\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+11.5\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+2.5
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No (Cloud Server)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+No (Online Only)
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{APMS Local GLM-4 OCR}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{8.5\%}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+\textbf{14.2\%}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{1.8}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Yes (Local)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Yes (Offline)}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+The comparative analysis reveals key insights:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Cursive Handwriting Robustness}: Tesseract OCR struggles
+  significantly with hand-written medical cursive, resulting in an
+  unacceptable Word Error Rate of 62.3\% due to its reliance on
+  segmented character models. In contrast, Google Cloud Vision and our
+  local GLM-4 OCR process text contextually, maintaining WER below 15\%.
+\item
+  \textbf{On-Premise Privacy Compliance}: Google Cloud Vision achieves
+  the lowest error rate but requires transmitting patient prescriptions
+  to cloud servers. This violates Egyptian Patient Data Protection laws
+  and HIPAA standards regarding patient confidentiality. Our local GLM-4
+  OCR pipeline runs entirely offline on-premise, guaranteeing data
+  privacy.
+\item
+  \textbf{Processing Latency}: Tesseract is extremely fast (0.4 s) but
+  lacks usability due to error rates. Google Cloud Vision incurs network
+  round-trip overhead (2.5 s average). APMS local GLM-4 OCR, executed
+  via Ollama on local hardware, completes transcription in 1.8 seconds,
+  demonstrating high suitability for real-time pharmacy operations.
+\end{itemize}
+
+\subsection{Arabic Processing and RTL UI/UX
+Evaluation}\label{arabic-processing-and-rtl-uiux-evaluation}
+
+\begin{quote}
+The bilingual capabilities of PharmaSys and Roshetety were evaluated
+under real-world usage. Right-to-Left (RTL) layout transitions in
+Flutter demonstrated 100\% stability across device
+
+aspect ratios. The localized Arabic interfaces allowed pharmacists to
+interact in their native language, reducing order verification time.
+
+Furthermore, the Arabic dosage parsing module correctly extracted
+clinical parameters (dosing interval and tablet frequency) from 92.4\%
+of Arabic handwriting instructions (e.g. mapping Arabic instructions
+like ``Qurs koll 8 sa'at'' -- one tablet every 8 hours -- to 3 doses
+daily), validating the effectiveness of our custom regex filters.
+\end{quote}
+
+\subsection{Demand Forecasting
+Performance}\label{demand-forecasting-performance}
+
+\begin{quote}
+Forecasting models were evaluated on the 60-month dataset covering 8,583
+products using R\textsuperscript{2}, RMSE, and MAE.
+
+TABLE 20: Demand Forecasting Results by Product Segment
+\end{quote}
+
+\includegraphics[width=4.80278in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+\textbf{Segment Model n R}\textsuperscript{2} \textbf{(\%) RMSE (Units)
+MAE (Units)}
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1323}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1711}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0692}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1252}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1338}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+Fast-Moving
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+LightGBM
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+736
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+19.52\%
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+52.69
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+6.77
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+Slow-Moving
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Croston's Method
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+1,329
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+2.23\%
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+12.53
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+1.85
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+Intermittent
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Historical Average
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+6,518
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Baseline
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+17.04
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.54
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+Segmenting products significantly improved performance compared to a
+global baseline model (which achieved an R\textsuperscript{2} of only
+11.07\% on fast-moving items). Intermittent demand presents a near-zero
+R\textsuperscript{2} for standard regressions, confirming that
+historical averaging remains the theoretically optimal estimator for
+sparse SKUs.
+\end{quote}
+
+\subsection{Shift Anomaly Detection
+Results}\label{shift-anomaly-detection-results}
+
+\begin{quote}
+The ECOD-LOF ensemble processed 1,000 daily shift records to identify
+reconciliation outliers.
+\end{quote}
+
+TABLE 21: Anomaly Detection Results Summary
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2119}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1820}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3340}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Metric}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Value}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+\textbf{Operational Interpretation}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Total Shifts Processed
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+1,000
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+Continuous reconciliation history
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Flagged Anomalies
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+33 (3.3\%)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+Atypical discrepancies requiring review
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+ECOD-LOF Agreement
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+974 / 1,000 (97.4\%)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+Strong statistical consensus
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+The high agreement rate (97.4\%) indicates that global multivariate
+distributions (ECOD) and local density neighborhoods (LOF) target
+identical statistical patterns, providing a high-confidence audit
+mechanism without labels.
+\end{quote}
+
+\subsection{Reinforcement Learning Reorder Policy
+Performance}\label{reinforcement-learning-reorder-policy-performance}
+
+\begin{quote}
+The Soft Actor-Critic (SAC) agent replenishment policy was compared
+against rule-based baselines (Fixed Reorder Point and Min-Max policy)
+within the simulated environment.
+\end{quote}
+
+TABLE 22: Reorder Policy Performance Comparison
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2372}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2457}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3013}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Replenishment Method}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Mean Cumulative Reward}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Cost Reduction vs. Baselines (\%)}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Fixed Reorder Point Policy
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+361.33
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+--
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Min-Max Inventory Policy
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+363.35
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+--
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{SAC Agent (200k steps)}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{579.84}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{+59.6\%}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+The SAC agent outperformed static rule-based heuristics by approximately
+60\%. Heuris-tics maintain static boundaries, leading to stockouts
+during demand spikes or excessive holding costs. The SAC agent learned
+to modulate ordering sizes dynamically based on current inventory
+velocities.
+\end{quote}
+
+\includegraphics[width=4.85333in,height=2.59in]{./media/image27.png}
+
+\begin{quote}
+Fig. 22: SAC Reorder Agent: Mean Evaluation Reward Progress over 200,000
+Training Timesteps
+\end{quote}
+
+\subsection{Autonomous Mobile Robot Navigation and Detection
+Results}\label{autonomous-mobile-robot-navigation-and-detection-results}
+
+\begin{quote}
+We conducted extensive experiments to validate the perception and
+control subsystems of the autonomous mobile robot. This section presents
+the training and validation results of the deep-learning models, a
+comparative analysis of the YOLOv8n and YOLO26n architectures, and the
+system integration phase outcomes.
+\end{quote}
+
+\subsection{YOLOv8n vs. YOLO26n Performance
+Comparison}\label{yolov8n-vs.-yolo26n-performance-comparison}
+
+\begin{quote}
+Two neural network architectures were trained and evaluated: the
+standard YOLOv8 Nano (YOLOv8n) and a modified deeper variant (YOLO26n).
+Both models were trained on the augmented medicine dataset under
+identical configurations. Table \textbf{??} shows the per-class
+validation metrics for the best-performing YOLOv8n model, which
+converged at epoch 44.
+
+TABLE 23: YOLOv8n Class Validation Results (Epoch 44)
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1137}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1015}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.0788}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1047}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1305}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Class}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Precision}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Recall}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{mAP@50}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{mAP@50-95}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+All Classes
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9925
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+1.0000
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9740
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Milga
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9930
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+1.0000
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Antopral
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.8800
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+1.0000
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9510
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Staturic
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9980
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+1.0000
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9540
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+The training progress of YOLOv8n at selected epochs is captured in Table
+\textbf{??}, showing the continuous reduction in box and classification
+loss.
+
+TABLE 24: YOLOv8n Training Loss and Metrics Progression
+\end{quote}
+
+\includegraphics[width=4.56667in,height=\textheight,keepaspectratio]{./media/image49.png}
+
+\begin{quote}
+\textbf{Epoch Bounding Box Loss Classification Loss mAP@50 mAP@50-95}
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1302}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1584}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1629}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1298}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1239}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+0.7940
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+2.6000
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.6410
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.5050
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+0.6740
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+1.0690
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9950
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9000
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+10
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+0.5400
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.6410
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9950
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9320
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+30
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+0.4510
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.4290
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9950
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9620
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{44 (Best)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{0.4370}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+\textbf{0.3950}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+\textbf{0.9950}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{0.9740}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+74 (Final)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+0.4070
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.3220
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9950
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9580
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+Table \textbf{??} outlines the validation results for YOLO26n, which
+achieved its best performance at epoch 89.
+\end{quote}
+
+TABLE 25: YOLO26n Class Validation Results (Epoch 89)
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1137}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1015}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.0788}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1047}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1305}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Class}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Precision}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Recall}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{mAP@50}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{mAP@50-95}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+All Classes
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+1.0000
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9800
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Milga
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+1.0000
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Antopral
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.8830
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+1.0000
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9950
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Staturic
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9890
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9170
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9890
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+0.9490
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+A comprehensive comparative analysis across key performance indicators
+(KPIs) is sum-marized in Table \textbf{??}.
+\end{quote}
+
+TABLE 26: YOLOv8n vs. YOLO26n Model Architecture and Performance
+Comparison
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2752}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1117}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1117}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Metric / Parameter}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+\textbf{YOLOv8n}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+\textbf{YOLO26n}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Trainable Parameters
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+3,006,233
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+2,375,421
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+GFLOPs (Inference Cost)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+8.1
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+5.2
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Total Layers
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+73
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+122
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Peak mAP@50
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9950
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9950
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Peak mAP@50-95
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9740
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9800
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Validation Precision
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9925
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+1.0000
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Validation Recall
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+1.0000
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9950
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Validation F1-Score
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9963
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.9975
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Best Epoch Number
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+44
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+89
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Total Training Time (Hours)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.161
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+0.322
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Epochs to mAP@50 \emph{\textgreater{}} 0.9
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+3
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+7
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Average Inference Latency (ms)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+2.9
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\begin{quote}
+3.3
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\includegraphics[width=3.01719in,height=1.45625in]{./media/image1.jpg}\includegraphics[width=3.01719in,height=1.45625in]{./media/image53.jpg}
+
+\begin{quote}
+(a) mAP@50 Comparison (b) mAP@50-95 Comparison
+
+Fig. 23: Mean Average Precision (mAP) curves comparing YOLOv8n and
+YOLO26n over training epochs.
+
+\includegraphics[width=3.01719in,height=1.45625in]{./media/image6.jpg}
+\includegraphics[width=3.01719in,height=1.45625in]{./media/image16.jpg}
+
+(a) Precision Curve (b) Recall Curve
+
+Fig. 24: Validation Precision and Recall curves over training epochs.
+\end{quote}
+
+\includegraphics[width=3.02031in,height=1.45625in]{./media/image44.jpg}\includegraphics[width=3.02187in,height=1.45625in]{./media/image40.jpg}
+
+\begin{quote}
+(a) Bounding Box Loss (b) Classification Loss
+
+Fig. 25: Training loss convergence comparison between YOLOv8n and
+YOLO26n.
+\end{quote}
+
+\includegraphics[width=4.42521in,height=2.36042in]{./media/image32.png}
+
+\begin{quote}
+Fig. 26: Final Validation Metrics comparison showing performance across
+Precision, Recall, mAP@50, and mAP@50-95.
+
+Based on the empirical results, YOLOv8n was selected for physical
+deployment. Al-though YOLO26n utilizes 36\% fewer GFLOPs due to its
+highly optimized parameter pruning, YOLOv8n converged 2.3\emph{$\times$} faster
+(achieving mAP@50 \emph{\textgreater{}} 0.9 by epoch 3 compared to epoch
+7 for YOLO26n) and demonstrated a 12\% lower inference latency (2.9ms
+vs. 3.3ms). This lower latency is critical for the responsiveness of the
+visual servoing control loop.
+\end{quote}
+
+\subsection{System Integration Verification and Test
+Phases}\label{system-integration-verification-and-test-phases}
+
+\begin{quote}
+System verification was executed using a structured bottom-up testing
+methodology:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Phase 1: Isolated Subsystem Testing}: Checked L298N direction
+  control and HC-05 Bluetooth response under manual terminal serial
+  commands. Checked YOLOv8 and ArUco detection accuracy on static test
+  images.
+\item
+  \textbf{Phase 2: Inter-subsystem Communication Testing}: Verified
+  latency and packet transmission stability of the single-character
+  serial command protocol.
+\item
+  \textbf{Phase 3: Visual Servoing Closed-Loop Testing}: Tested the
+  steering response of the chassis to correct centering errors.
+\item
+  \textbf{Phase 4: Full End-to-End Mission Integration}: Verified the
+  FSM transitions from target medicine search, approaching, stopping,
+  triggering the robotic arm grasp, back-ward maneuvering, ArUco
+  detection, and drop-off delivery. The system successfully executed the
+  complete workflow autonomously.
+\end{itemize}
+
+\section{3D Printing Specimen Characterization and Infill
+Analysis}\label{d-printing-specimen-characterization-and-infill-analysis}
+
+\begin{quote}
+To optimize the structural integrity and weight of the robotic fingers,
+palm, and arm links, we performed characterization tests on 3D-printed
+specimens using different infill densities and patterns. Standard test
+specimens were fabricated using Polylactic Acid (PLA) on a fused
+deposition modeling (FDM) printer. We measured the specimen mass
+(representing weight) and the print duration across grid, cubic, and
+gyroid infill patterns at 25\%, 50\%, and 75\% infill densities. The
+results are illustrated in Fig. \textbf{??}.
+\end{quote}
+
+\includegraphics[width=4.32437in,height=2.25781in]{./media/image15.jpg}
+
+\begin{quote}
+Fig. 27: Effect of infill pattern and density on (a) weight of specimens
+and (b) printing time of specimens, illustrating the performance
+tradeoffs of grid, cubic, and gyroid structures.
+
+The characterization curves reveal several key insights:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Weight-to-Density Scaling}: Across all patterns, the weight of
+  the specimens scales linearly with infill density. Grid infill
+  configurations consistently yielded the lowest mass at lower densities
+  (e.g., 25\% density grid yielded 12.5g compared to 14.8g for gyroid),
+  which is critical for reducing the rotational inertia of the fingers
+  and palm.
+\item
+  \textbf{Printing Time Tradeoffs}: As density increases, print duration
+  rises significantly. The gyroid pattern, while providing isotropic
+  structural strength, requires continuous curves, increasing the print
+  duration by up to 30\% compared to grid patterns (e.g., at 75\%
+  density, print time was 120 minutes for gyroid vs. 92 minutes for
+  grid).
+\item
+  \textbf{Optimal Parameter Selection}: Based on these results, we
+  selected a 25\%--30\% grid infill configuration for the structural
+  links and robotic arm shells. This configuration provides the optimal
+  balance, keeping the weight minimal to prevent servo motor
+\end{itemize}
+
+\begin{quote}
+overload while maintaining sufficient rigidity to resist bending during
+the medicine pick-and-place grasping phase.
+\end{quote}
+
+\section{Performance Optimization
+Results}\label{performance-optimization-results}
+
+\begin{quote}
+To ensure execution within local on-premise hardware constraints,
+several structural optimiza-tions were implemented. Their individual
+impacts are detailed in Table \textbf{??}.
+\end{quote}
+
+TABLE 27: Performance Optimization Results
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1950}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3052}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4998}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Optimization Layer}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Implementation Strategy}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Operational Impact}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Search Caching
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Dictionary with LRU-style storage
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Eliminates redundant database lookups for common drugs
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Early Exit Fallback
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Halt priority loop when score \emph{$\ge$} 85
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Reduces average query search latency by 40--60\%
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Exact Match Return
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Direct set membership lookup
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Common drugs resolved in \emph{O}(1) time without string matching
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Variant Score Cap
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Capping OCR permutations at 85\%
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Prevents noisy visual variants from introducing false positives
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Consolidated Cleaners
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Combined regex filters in single pass
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Minimizes memory copies and string operations per request
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\section{OCR Visual Confusion
+Mappings}\label{ocr-visual-confusion-mappings}
+
+\begin{quote}
+The visual character similarity mapping system contains 26
+single-character, 12 multi-character, and 5 drug-specific rules to
+correct handwriting transcription noise prior to fuzzy scoring. The top
+rules are summarized in Table \textbf{??}.
+\end{quote}
+
+TABLE 28: OCR Visual Confusion Character Mappings
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1420}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1602}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5176}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Source Stroke}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Target Mapping}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Visual Rationale \& Context}
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+m
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+rn
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Continuous downward curves merge, mimicking double humps
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+l
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Vertical strokes are visually identical in cursive
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+cl
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+d
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Curved stroke joins vertical line closely
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+o
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Zero and lowercase 'o' share circular strokes
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+vv
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+w
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Consecutive angular strokes merge in continuous writing
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+rn
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+m
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Joint curves are read as single letter humps
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+d
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+cl
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Left curve disconnects from vertical stem
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\centering
+g
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+q
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Loop with bottom tail matches angular tail
+\end{quote}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\section{Engineering Challenges and
+Solutions}\label{engineering-challenges-and-solutions}
+
+\begin{quote}
+Several operational challenges were resolved during integration:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Electromagnetic Interference}: Noise from MG995R servos caused
+  spikes in serial port data, triggering false distance events.
+  Resolving this required routing power lines away from signal lines and
+  adding ferrite beads to USB cables.
+\item
+  \textbf{Tendon Slackness}: After prolonged use, the nylon tendons
+  stretched, reducing finger flexion range. Introducing a bi-weekly
+  calibration routine and switching to braided fiber fishing lines (80lb
+  rating) stabilized the joints.
+\item
+  \textbf{OCR Hallucinations}: The local VLM occasionally transcribed
+  non-drug words from package margins. The drug pool check and
+  Jaro-Winkler match layer successfully blocked these inputs,
+  guaranteeing only registered medications enter the queue.
+\end{itemize}
+
+\section{Comparison with Related
+Work}\label{comparison-with-related-work}
+
+\begin{quote}
+TABLE 29: Comparison with Existing Robotic Grasping Platforms
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2248}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2245}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1324}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1861}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1206}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{System Platform}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Mechanism}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Success Rate}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Object ID Method}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Cost (USD)}
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Mohammadi et al. (2020)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Soft Robotic Hand
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+80.0\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+None
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\$200
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Pinheiro et al. (2023)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Zero Arm Prosthesis
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+86.7\%
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+None
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\$180
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Bulgarelli et al. (2016)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Custom InMoov Hand
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+--
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+None
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\$150
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{APMS (Present Work)}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{InMoov + MLP + VLM}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{85.7\%}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{GLM-OCR (Local)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{\$120}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\begin{quote}
+APMS provides a comparable grasp success rate to prosthetic research
+hands, but incorporates local visual medication identification and
+database matching at a lower overall component cost.
+\end{quote}
+
+\section{CONCLUSIONS, ADOPTED ETHICS, AND FUTURE
+WORK}\label{conclusions-adopted-ethics-and-future-work}
+
+\section{Summary and Conclusion}\label{summary-and-conclusion}
+
+\begin{quote}
+This thesis presented the Automated Pharmacy Management System (APMS), a
+fully inte-grated hardware-software solution for community pharmacy
+automation. The system bridges the digital gap between the patient
+(Roshetety Mobile App) and physical dispensing (3D-printed InMoov hand)
+through a robust Node.js backend. Spelling errors in transcribed
+handwriting are successfully resolved via a five-stage sequential
+fallback search engine, while safety is maintained using a five-layer
+safety filter. Furthermore, advanced AI analytics optimize inventory,
+forecasting demand across product segments, identifying cash anomalies
+with an ECOD-LOF ensemble, and reducing ordering costs by 60\% using a
+Soft Actor-Critic reinforcement learning replenishment agent. APMS
+demonstrates that local, low-cost automation is highly viable.
+\end{quote}
+
+\section{Adopted Ethics and
+Compliance}\label{adopted-ethics-and-compliance}
+
+\begin{quote}
+Medical automation requires strict adherence to ethical and security
+protocols:
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{Medication Safety Filters}: The five-layer safety filter
+  prevents incorrect drug dis-pensing. Releasing incorrect medications
+  can result in severe patient harm; therefore, the system requires
+  final manual confirmation by a licensed pharmacist before the command
+  is sent to the robotic arm.
+\item
+  \textbf{Data Sovereignty and Patient Privacy}: Under HIPAA guidelines,
+  transmitting patient prescription data or medical images to external
+  cloud APIs presents a severe privacy risk. The APMS framework solves
+  this by deploying all AI models (GLM-OCR, demand forecasting, anomaly
+  detection) locally on-premise. No patient-identifiable data is
+  transmitted outside the local network.
+\end{itemize}
+
+\section{Limitations of the Current
+System}\label{limitations-of-the-current-system}
+
+\begin{itemize}
+\item
+  \textbf{OCR Lighting Dependence}: Under low light
+  (\emph{\textless{}}50 lm), OCR accuracy drops to 71.0\%, rendering
+  autonomous operation unreliable.
+\item
+  \textbf{Simulated RL Training}: The SAC agent was evaluated in a
+  simulated environment calibrated on historical demand. Deploying it to
+  direct offline reordering on the physical environment requires further
+  validation to avoid stocking risks.
+\item
+  \textbf{Mechanical Wear}: Tendons lose tension over time, requiring
+  physical maintenance and recalibration every 14 days.
+\end{itemize}
+
+\section{Future Work}\label{future-work}
+
+\begin{itemize}
+\item
+  \textbf{Embedded LED Integration}: Adding automated LED lighting
+  inside the dispensing chamber to guarantee constant luminance and
+  maximize OCR reliability.
+\item
+  \textbf{Multi-Variable Reinforcement Learning}: Extending the SAC
+  agent state space to incorporate variable supplier lead times,
+  discount pricing tiers, and multi-product warehouse constraints.
+\item
+  \textbf{Edge VLM Compilations}: Compiling the GLM-OCR model using
+  TensorRT or ONNX to reduce local inference latency from 1.8 seconds to
+  under 300 milliseconds.
+\item
+  \textbf{Arabic Medical Handwriting Recognition}: Training a
+  specialized transformer-based handwriting model optimized for
+  handwritten Arabic prescriptions, which present additional cursive
+  complexity.
+\end{itemize}
+
+\chapter*{REFERENCES}\label{references}
+\addcontentsline{toc}{chapter}{References}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  G. Langevin, ``InMoov: The first life-size humanoid robot you can 3D
+  print and animate,'' Available:
+  \href{https://inmoov.fr/project}{https://inmoov.fr/}
+  \href{https://inmoov.fr/project}{project}, {[}Accessed: May 2026{]}.
+\item
+  A. Mohammadi, J. Lavranos, P. Choong, and D. Oetomo, ``A practical
+  3D-printed soft robotic prosthetic hand with multi-articulating
+  capabilities,'' \emph{PLOS ONE}, vol. 15, no. 5, p. e0232766, 2020.
+\item
+  A. Bulgarelli, G. Toscana, L. O. Russo, G. A. Farulla, M. Indaco, and
+  B. Bona, ``A low-cost open source 3D-printable dexterous
+  anthropomorphic robotic hand with a parallel spherical joint wrist for
+  sign languages reproduction,'' \emph{International Journal of Advanced
+  Robotic Systems}, vol. 13, no. 3, 2016.
+\item
+  G. E. Montagut, ``InMoov robot: building of the first open source 3D
+  printed life-size robot,'' \emph{Semantic Scholar}, Available:
+  \url{https://www.semanticscholar.org/paper/Inmoov-robot}, {[}Accessed:
+  May 2026{]}.
+\item
+  C. Lugaresi et al., ``MediaPipe: A framework for building perception
+  pipelines,'' \emph{arXiv preprint arXiv:1906.08172}, 2019.
+\item
+  G. Sanchez-Brizuela, A. Cisnal, E. de la Fuente-Lopez, J. C. Fraile,
+  and J. Perez-Turiel, ``Lightweight real-time hand segmentation
+  leveraging MediaPipe landmark detection,'' \emph{Signal, Image and
+  Video Processing}, vol. 17, no. 7, pp. 3741--3748, 2023.
+\item
+  Google LLC, ``MediaPipe Hand Landmarker Hand landmarks detection
+  guide,'' \emph{Google for Developers}, Available:
+  \href{https://developers.google.com/edge/mediapipe/solutions/vision/hand_landmarker}{https://developers.google.com/edge/mediapipe/solutions/vision/hand\pandocbounded{\includegraphics[keepaspectratio]{./media/image13.png}}landmarker,
+  {[}Accessed: May 2026{]}.}
+\item
+  Google LLC, ``Prosthesis control via Mirru App using MediaPipe hand
+  tracking,'' \emph{Google Developers Blog}, Avail-able:
+  \url{https://developers.googleblog.com/en/prosthesis-control-via-mirru-app-using-mediapipe-hand-tracking/},
+  {[}Ac-cessed: May 2026{]}.
+\item
+  E. G. Ribeiro, R. de Queiroz Mendes, and V. Grassi, ``Real-time deep
+  learning approach to visual servo control and grasp detection for
+  autonomous robotic manipulation,'' \emph{Robotics and Autonomous
+  Systems}, vol. 139, p. 103757, 2021.
+\item
+  S. Kumra, S. Joshi, and F. Sahin, ``GR-ConvNet v2: A real-time
+  multi-grasp detection network for robotic grasping,'' \emph{Sensors},
+  vol. 22, no. 17, p. 6377, 2022.
+\item
+  I. Lenz, H. Lee, and A. Saxena, ``Deep learning for detecting robotic
+  grasps,'' \emph{International Journal of Robotics Research}, vol. 34,
+  no. 4-5, pp. 705--724, 2015.
+\item
+  A. A. Aydin and O. Avinc, ``The effects of infill patterns on the
+  mechanical properties of 3D printed PLA parts fabricated by FDM,''
+  \emph{ResearchGate}, Available:
+  \url{https://www.researchgate.net/publication/359334862}, {[}Accessed:
+  May 2026{]}.
+\item
+  ResearchGate, ``The influence of infill density on the mechanical
+  properties of PLA samples in FDM 3D printing,'' Available:
+  \url{https://www.researchgate.net/publication/392457869}, {[}Accessed:
+  May 2026{]}.
+\item
+  M. Eryildiz, ``Effect of infill patterns on the mechanical properties
+  of 3D-printed PLA parts fabricated by FDM,'' \emph{Polymers}, vol. 13,
+  no. 12, p. 2036, 2021.
+\item
+  Wevolver, ``InMoov 3D printed hand and forearm,'' Available:
+  \href{https://www.wevolver.com/specs/inmoov-3d-printed-hand-and-forarm}{https://www.wevolver.com/specs/}
+  \href{https://www.wevolver.com/specs/inmoov-3d-printed-hand-and-forarm}{inmoov-3d-printed-hand-and-forarm},
+  {[}Accessed: May 2026{]}.
+\item
+  R. Li, F. Li, and J. Li, ``Eye-in-hand robotic arm gripping system
+  based on machine learning and state delay optimisation,''
+  \emph{Applied Sciences}, vol. 13, no. 4, p. 2113, 2023.
+\item
+  G. Schillaci, S. Bodiro\v{z}a, and V. V. Hafner, ``Evaluating the effect
+  of saliency detection and attention manipulation in human-robot
+  interaction,'' \emph{International Journal of Social Robotics}, vol.
+  5, no. 1, pp. 139--152, 2013.
+\item
+  ResearchGate, ``Effect of infill pattern and density on tensile
+  properties of 3D-printed polylactic acid parts via fused deposition
+  modelling (FDM),'' Available:
+  \url{https://www.researchgate.net/publication/353764104}, {[}Accessed:
+  May 2026{]}.
+\item
+  A. A. Syntetos and J. E. Boylan, ``The accuracy of intermittent demand
+  estimates,'' \emph{International Journal of Forecasting}, vol. 21, no.
+  2, pp. 303--314, 2005.
+\item
+  N. Kourentzes, ``Intermittent demand forecasts with neural networks,''
+  \emph{International Journal of Production Economics}, vol. 143, no. 1,
+  pp. 198--206, 2013.
+\item
+  C. D. Hubbs, H. D. Perez, O. Sarwar, N. V. Sahinidis, I. E. Grossmann,
+  and C. T. Maravelias, ``A deep reinforcement learning approach for
+  chemical production scheduling,'' \emph{Computers \& Chemical
+  Engineering}, vol. 141, p. 106982, 2020.
+\item
+  D. Madeka et al., ``Deep inventory management,'' \emph{arXiv preprint
+  arXiv:2210.03137}, 2022.
+\item
+  T. Chen and C. Guestrin, ``XGBoost: A scalable tree boosting system,''
+  in \emph{Proc. ACM SIGKDD Int. Conf. Knowledge Discovery and Data
+  Mining}, 2016, pp. 785--794.
+\item
+  G. Ke et al., ``LightGBM: A highly efficient gradient boosting
+  decision tree,'' in \emph{Advances in Neural Information Processing
+  Systems}, vol. 30, 2017.
+\item
+  T. Haarnoja, A. Zhou, P. Abbeel, and S. Levine, ``Soft actor-critic:
+  Off-policy maximum entropy deep reinforcement learning with a
+  stochastic actor,'' in \emph{Proc. Int. Conf. Machine Learning
+  (ICML)}, 2018, pp. 1861--1870.
+\item
+  S. Ramaswamy, R. Rastogi, and K. Shim, ``Efficient algorithms for
+  mining outliers from large data sets,'' \emph{ACM SIGMOD Record}, vol.
+  29, no. 2, pp. 427--438, 2000.
+\end{enumerate}
+
+\appendix
+\chapter{APPENDIX}\label{appendix}
+
+\section{PostgreSQL Relational Table
+Schema}\label{postgresql-relational-table-schema}
+
+\begin{quote}
+\emph{-\/- Users table for authentication and roles} \textbf{CREATE
+TABLE} users
+(\includegraphics[width=6.36181in,height=7.67778in]{./media/image49.png}
+
+id SERIAL \textbf{PRIMARY KEY},
+
+name \textbf{VARCHAR}(255) \textbf{NOT NULL},
+
+email \textbf{VARCHAR}(255) \textbf{UNIQUE NOT NULL},
+
+password\_hash \textbf{VARCHAR}(255) \textbf{NOT NULL},
+
+\textbf{role VARCHAR}(50) \textbf{NOT NULL CHECK} (\textbf{role IN}
+('Staff', 'Manager')), created\_at \textbf{TIMESTAMP DEFAULT
+CURRENT\_TIMESTAMP}
+
+);
+
+\emph{-\/- Medicines inventory tracking table} \textbf{CREATE TABLE}
+medicines\_inventory (
+
+id SERIAL \textbf{PRIMARY KEY},
+
+trade\_name \textbf{VARCHAR}(255) \textbf{UNIQUE NOT NULL},
+
+active\_substance \textbf{VARCHAR}(255) \textbf{NOT NULL},
+normalized\_name \textbf{VARCHAR}(255) \textbf{NOT NULL},
+
+stock\_count \textbf{INT NOT NULL DEFAULT} 0 \textbf{CHECK}
+(stock\_count \textgreater= 0), cost \textbf{DECIMAL}(10, 2) \textbf{NOT
+NULL CHECK} (cost \textgreater= 0),
+
+price \textbf{DECIMAL}(10, 2) \textbf{NOT NULL CHECK} (price
+\textgreater= 0),
+
+expiry\_date \textbf{DATE NOT NULL}, dosage\_form \textbf{VARCHAR}(100)
+\textbf{NOT NULL}, manufacturer \textbf{VARCHAR}(255) \textbf{NOT NULL},
+
+created\_at \textbf{TIMESTAMP DEFAULT CURRENT\_TIMESTAMP}
+
+);
+
+\emph{-\/- Indexing for normalized name fuzzy searches}
+
+\textbf{CREATE INDEX} idx\_medicines\_normalized \textbf{ON}
+medicines\_inventory(normalized\_name);
+
+\emph{-\/- Prescriptions tracking table} \textbf{CREATE TABLE}
+prescriptions (
+
+id SERIAL \textbf{PRIMARY KEY},
+
+patient\_name \textbf{VARCHAR}(255) \textbf{NOT NULL},
+
+status \textbf{VARCHAR}(50) \textbf{NOT NULL CHECK} (status \textbf{IN}
+('Pending', 'Processing', ' Dispensed', 'Ready')),
+
+created\_at \textbf{TIMESTAMP DEFAULT CURRENT\_TIMESTAMP}
+
+);
+
+\emph{-\/- Prescription item lookup table} \textbf{CREATE TABLE}
+prescription\_items (
+
+id SERIAL \textbf{PRIMARY KEY},
+
+prescription\_id \textbf{INT} REFERENCES prescriptions(id) \textbf{ON
+DELETE CASCADE}, medicine\_id \textbf{INT} REFERENCES
+medicines\_inventory(id) \textbf{ON DELETE RESTRICT}, quantity
+\textbf{INT NOT NULL CHECK} (quantity \textgreater{} 0)
+
+);
+
+\emph{-\/- Supplier invoices tracking table} \textbf{CREATE TABLE}
+invoices\_fawateer (
+
+id SERIAL \textbf{PRIMARY KEY},
+
+supplier\_name \textbf{VARCHAR}(255) \textbf{NOT NULL},
+
+total\_amount \textbf{DECIMAL}(10, 2) \textbf{NOT NULL CHECK}
+(total\_amount \textgreater= 0), created\_at \textbf{TIMESTAMP DEFAULT
+CURRENT\_TIMESTAMP}
+
+);
+\end{quote}
+
+\section{MediaPipe Gesture Mimicry
+Loop}\label{mediapipe-gesture-mimicry-loop}
+
+\includegraphics[width=6.36181in,height=0.63056in]{./media/image49.png}
+
+\begin{quote}
+\includegraphics[width=6.36181in,height=1.79722in]{./media/image49.png}
+\end{quote}
+
+\section{Sequential Search Fallback
+Implementation}\label{sequential-search-fallback-implementation}
+
+\includegraphics[width=6.36736in,height=4.76597in]{./media/image49.png}
+
+\end{document}
